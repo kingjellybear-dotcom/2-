@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 기말고사 — 2학년 완전정복</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F2F4F6;
+  --surface: #FFFFFF;
+  --surface2: #F8F9FA;
+  --border: #E5E8EB;
+  --text-primary: #191F28;
+  --text-secondary: #4E5968;
+  --text-tertiary: #8B95A1;
+  --blue: #3182F6;
+  --blue-light: #EBF3FE;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Header ── */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px; height: 58px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.header-badge {
+  background: var(--blue); color: #fff;
+  font-size: 11px; font-weight: 700;
+  padding: 3px 8px; border-radius: 100px; letter-spacing: .02em;
+}
+.header-title { font-size: 15px; font-weight: 700; }
+.search-wrap { position: relative; max-width: 300px; width: 100%; }
+.search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); pointer-events: none; }
+.search-input {
+  width: 100%; height: 38px;
+  background: var(--bg); border: 1.5px solid transparent; border-radius: 10px;
+  padding: 0 12px 0 34px; font-family: inherit; font-size: 14px;
+  color: var(--text-primary); outline: none;
+  transition: border-color .15s, background .15s;
+}
+.search-input::placeholder { color: var(--text-tertiary); }
+.search-input:focus { background: #fff; border-color: var(--blue); }
+
+/* ── Hero ── */
+.hero {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 40px 20px 36px; text-align: center;
+}
+.hero-eyebrow { font-size: 12px; font-weight: 700; color: var(--blue); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 10px; }
+.hero-title { font-size: 28px; font-weight: 800; letter-spacing: -.03em; line-height: 1.25; margin-bottom: 8px; }
+.hero-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 24px; }
+.schedule-row { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.schedule-pill { background: var(--bg); border-radius: var(--radius-md); padding: 12px 18px; text-align: center; min-width: 108px; }
+.schedule-pill .day { font-size: 11px; font-weight: 700; color: var(--blue); margin-bottom: 4px; }
+.schedule-pill .subjects { font-size: 13px; font-weight: 600; color: var(--text-primary); line-height: 1.5; }
+.schedule-pill .time { font-size: 11px; color: var(--text-tertiary); margin-top: 3px; }
+
+/* ── Main ── */
+.main { max-width: 860px; margin: 0 auto; padding: 28px 14px 80px; }
+
+/* D-day */
+.dday-banner {
+  background: var(--blue); color: #fff;
+  border-radius: var(--radius-md); padding: 16px 20px; margin-bottom: 22px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.dday-left .label { font-size: 12px; font-weight: 500; opacity: .8; }
+.dday-left .num { font-size: 24px; font-weight: 800; }
+.dday-right { font-size: 13px; opacity: .85; text-align: right; line-height: 1.6; }
+
+/* Tabs */
+.tabs {
+  display: flex; gap: 8px; margin-bottom: 20px;
+  overflow-x: auto; padding-bottom: 2px;
+  -ms-overflow-style: none; scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex-shrink: 0; height: 36px; padding: 0 14px;
+  border-radius: 100px; border: 1.5px solid var(--border);
+  background: var(--surface); font-family: inherit; font-size: 13px; font-weight: 600;
+  color: var(--text-secondary); cursor: pointer; transition: all .15s;
+  display: flex; align-items: center; gap: 6px;
+}
+.tab:hover { border-color: var(--blue); color: var(--blue); }
+.tab.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+.tab-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── Subject Card ── */
+.subject-card {
+  background: var(--surface); border-radius: var(--radius-lg);
+  border: 1px solid var(--border); margin-bottom: 14px; overflow: hidden;
+  transition: box-shadow .2s;
+}
+.subject-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.06); }
+
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px; cursor: pointer; user-select: none; gap: 12px;
+}
+.card-header-left { display: flex; align-items: center; gap: 13px; }
+.subject-icon { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.card-meta { display: flex; flex-direction: column; gap: 2px; }
+.subject-name { font-size: 17px; font-weight: 700; }
+.subject-publisher { font-size: 12px; color: var(--text-tertiary); font-weight: 500; }
+.card-right { display: flex; align-items: center; gap: 10px; }
+.unit-count { font-size: 12px; font-weight: 600; color: var(--text-tertiary); background: var(--bg); padding: 4px 10px; border-radius: 100px; }
+.chevron { width: 20px; height: 20px; color: var(--text-tertiary); transition: transform .25s; flex-shrink: 0; }
+.card-header.open .chevron { transform: rotate(180deg); }
+
+.card-body { display: none; border-top: 1px solid var(--border); }
+.card-body.open { display: block; }
+
+/* Sections inside card */
+.scope-section { padding: 20px 22px; border-bottom: 1px solid var(--border); }
+.scope-section:last-child { border-bottom: none; }
+.scope-label { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 12px; }
+
+/* Unit items */
+.unit-list { display: flex; flex-direction: column; gap: 10px; }
+.unit-item { background: var(--surface2); border-radius: var(--radius-sm); padding: 14px 16px; border-left: 3px solid transparent; }
+.unit-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+.unit-detail { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+.unit-page { display: inline-block; margin-top: 6px; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; background: rgba(0,0,0,.05); color: var(--text-tertiary); }
+
+/* Concept tables */
+.concept-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13px; }
+.concept-table th { background: rgba(0,0,0,.04); font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+.concept-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text-secondary); line-height: 1.6; }
+.concept-table tr:last-child td { border-bottom: none; }
+.concept-table .key { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+
+/* Formula boxes */
+.formula-box { background: #F0F7FF; border: 1px solid #C8DFFC; border-radius: var(--radius-sm); padding: 12px 16px; margin-top: 8px; font-size: 13px; line-height: 1.8; color: #1a4fa3; font-family: 'Pretendard', monospace; }
+.formula-box strong { font-weight: 800; color: #0c3280; }
+
+/* Word list */
+.word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; margin-top: 8px; }
+.word-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 13px; }
+.word-en { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.word-ko { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.word-ex { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; font-style: italic; line-height: 1.5; }
+
+/* Tip box */
+.tip-box { background: var(--blue-light); border-radius: var(--radius-md); padding: 12px 16px; font-size: 13px; color: #1a5fbf; line-height: 1.6; margin: 16px 22px; }
+.tip-box strong { font-weight: 700; }
+.warn-box { background: #FFF9EB; border-left: 3px solid #F5A623; border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; color: #7B5000; line-height: 1.6; margin-top: 10px; }
+.warn-box strong { font-weight: 700; }
+
+/* Highlight */
+mark { background: #FFF4CC; color: inherit; border-radius: 2px; padding: 0 1px; }
+
+/* No result */
+.no-result { text-align: center; padding: 60px 20px; color: var(--text-tertiary); font-size: 15px; display: none; }
+.no-result.show { display: block; }
+
+/* Subject colors */
+.color-korean  { background: #FFF0F0; }
+.color-science { background: #F0FFF4; }
+.color-math    { background: #EBF3FE; }
+.color-history { background: #FFF7E6; }
+.color-english { background: #F3F0FF; }
+
+.border-korean  { border-left-color: #FF4D4F !important; }
+.border-science { border-left-color: #52C41A !important; }
+.border-math    { border-left-color: #3182F6 !important; }
+.border-history { border-left-color: #FA8C16 !important; }
+.border-english { border-left-color: #722ED1 !important; }
+
+.text-korean  { color: #CF1322; }
+.text-science { color: #389E0D; }
+.text-math    { color: #1666C0; }
+.text-history { color: #D46B08; }
+.text-english { color: #531DAB; }
+
+.dot-korean  { background: #FF4D4F; }
+.dot-science { background: #52C41A; }
+.dot-math    { background: #3182F6; }
+.dot-history { background: #FA8C16; }
+.dot-english { background: #722ED1; }
+
+.tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 4px; margin-right: 4px; }
+.tag-red { background: #FFF0F0; color: #CF1322; }
+.tag-blue { background: #EBF3FE; color: #1666C0; }
+.tag-green { background: #F0FFF4; color: #389E0D; }
+.tag-orange { background: #FFF7E6; color: #D46B08; }
+.tag-purple { background: #F3F0FF; color: #531DAB; }
+
+@media (max-width: 600px) {
+  .hero-title { font-size: 22px; }
+  .card-header { padding: 14px 16px; }
+  .scope-section { padding: 16px 16px; }
+  .tip-box { margin: 12px 16px; }
+  .word-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <span class="header-badge">2학년</span>
+    <span class="header-title">기말고사 완전정복</span>
+    <span class="header-badge" style="background:var(--text-tertiary)">2022개정</span>
+  </div>
+  <div class="search-wrap">
+    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input class="search-input" type="search" placeholder="단어, 개념, 공식 검색…" id="searchInput" autocomplete="off">
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">2026학년도 1학기 2차 정기시험 · 2학년</div>
+  <h1 class="hero-title">이것만 보면<br>기말고사 끝</h1>
+  <p class="hero-sub">6월 30일(화) ~ 7월 2일(목) · 5과목 핵심 개념 완전 정리</p>
+  <p class="hero-sub" style="margin-top:-18px;font-size:11.5px;color:var(--text-tertiary)">2022 개정 교육과정 · 영어 천재(소) · 국어 비상(박) · 역사 비상 · 수학 동아(강) · 과학 미래엔</p>
+  <div class="schedule-row">
+    <div class="schedule-pill">
+      <div class="day">6/30 화</div>
+      <div class="subjects">수학<br>국어</div>
+      <div class="time">2교시 / 3교시</div>
+    </div>
+    <div class="schedule-pill">
+      <div class="day">7/1 수</div>
+      <div class="subjects">자주학습<br>과학</div>
+      <div class="time">2교시 / 3교시</div>
+    </div>
+    <div class="schedule-pill">
+      <div class="day">7/2 목</div>
+      <div class="subjects">역사<br>영어</div>
+      <div class="time">2교시 / 3교시</div>
+    </div>
+  </div>
+</section>
+
+<main class="main">
+
+  <div class="dday-banner" id="ddayBanner">
+    <div class="dday-left">
+      <div class="label">첫 시험(6/30)까지</div>
+      <div class="num" id="ddayNum">계산 중…</div>
+    </div>
+    <div class="dday-right">성적 확인<br>7/3(금) ~ 7/6(월)</div>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-filter="all">전체</button>
+    <button class="tab" data-filter="korean"><span class="tab-dot dot-korean"></span>국어</button>
+    <button class="tab" data-filter="math"><span class="tab-dot dot-math"></span>수학</button>
+    <button class="tab" data-filter="science"><span class="tab-dot dot-science"></span>과학</button>
+    <button class="tab" data-filter="history"><span class="tab-dot dot-history"></span>역사</button>
+    <button class="tab" data-filter="english"><span class="tab-dot dot-english"></span>영어</button>
+  </div>
+
+  <div class="no-result" id="noResult">🔍 검색 결과가 없어요</div>
+
+  <!-- ══════════════════════════════════════
+       📖 국어
+  ══════════════════════════════════════ -->
+  <div class="subject-card" data-subject="korean">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="subject-icon color-korean">📖</div>
+        <div class="card-meta">
+          <div class="subject-name text-korean">국어</div>
+          <div class="subject-publisher">비상 (박현숙) · 6/30 3교시 11:30</div>
+        </div>
+      </div>
+      <div class="card-right">
+        <span class="unit-count">4단원</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <!-- 2(1) 피동 표현과 인용 표현 -->
+      <div class="scope-section">
+        <div class="scope-label">2.(1) 피동 표현과 인용 표현</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-korean">
+            <div class="unit-title">🔴 피동 표현이란?</div>
+            <div class="unit-detail">
+              주어가 다른 대상에 의해 <strong>동작을 당하는</strong> 것을 나타낸 표현.<br>
+              능동문: <em>"경찰이 도둑을 잡았다"</em> → 피동문: <em>"도둑이 경찰에게 잡혔다"</em>
+            </div>
+          </div>
+
+          <div class="unit-item border-korean">
+            <div class="unit-title">🔴 피동 표현 만드는 법 2가지</div>
+            <div class="unit-detail">
+              <span class="tag tag-red">방법①</span><strong>파생적 피동 (피동사)</strong> — 동사 어근에 <strong>-이-, -히-, -리-, -기-</strong>를 붙임<br>
+              &nbsp;&nbsp;• 보다 → 보<u>이</u>다 / 먹다 → 먹<u>히</u>다 / 팔다 → 팔<u>리</u>다 / 안다 → 안<u>기</u>다<br><br>
+              <span class="tag tag-red">방법②</span><strong>통사적 피동 ('-아/어지다' 붙이기)</strong><br>
+              &nbsp;&nbsp;• 읽다 → 읽어지다 / 만들다 → 만들어지다<br>
+              &nbsp;&nbsp;⚠ 피동사가 있는 단어에 '-어지다'를 또 붙이면 <strong>이중 피동</strong> → 비문법적! (예: 잡혀지다 ✗)
+            </div>
+          </div>
+
+          <div class="unit-item border-korean">
+            <div class="unit-title">🔴 피동문의 특징</div>
+            <div class="unit-detail">
+              • 능동문의 목적어 → 피동문의 주어<br>
+              • 능동문의 주어 → 피동문에서 <strong>'-에게', '-에 의해'</strong> 등으로 표시 (부사어)<br>
+              • 피동문은 행위자를 숨기거나 행위의 결과를 강조할 때 사용
+            </div>
+          </div>
+
+          <div class="unit-item border-korean">
+            <div class="unit-title">🔴 인용 표현 — 직접 인용 vs 간접 인용</div>
+            <div class="unit-detail">
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>구분</th><th>형식</th><th>예시</th></tr>
+                <tr><td class="key">직접 인용</td><td>큰따옴표(" ") + <strong>라고</strong></td><td>"빨리 와."라고 했다</td></tr>
+                <tr><td class="key">간접 인용</td><td>따옴표 없음 + <strong>고</strong></td><td>빨리 오라고 했다</td></tr>
+              </table>
+              <br>간접 인용 시 <strong>인칭·시제·종결어미</strong> 변환 필수!<br>
+              예: "나는 행복해" → 자기가 <strong>행복하다고</strong> 했다 (1인칭→3인칭, 해 체→다 체)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2(2) 매체 자료의 재현 방식 -->
+      <div class="scope-section">
+        <div class="scope-label">2.(2) 매체 자료의 재현 방식</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-korean">
+            <div class="unit-title">📌 매체의 종류와 특성</div>
+            <div class="unit-detail">
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>매체</th><th>특성</th><th>예</th></tr>
+                <tr><td class="key">인쇄 매체</td><td>텍스트·이미지 중심, 비교적 정보 신뢰도 높음</td><td>신문, 잡지, 책</td></tr>
+                <tr><td class="key">방송 매체</td><td>음성·영상 결합, 빠른 전달, 단방향</td><td>TV, 라디오</td></tr>
+                <tr><td class="key">인터넷 매체</td><td>쌍방향, 빠른 속도, 정보 생산·소비 동시 가능</td><td>SNS, 유튜브, 뉴스</td></tr>
+                <tr><td class="key">디지털 매체</td><td>복합 양식(텍스트+이미지+영상+음성), 하이퍼링크</td><td>스마트폰 앱, 웹사이트</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="unit-item border-korean">
+            <div class="unit-title">📌 같은 사건, 다른 재현</div>
+            <div class="unit-detail">
+              매체마다 같은 사건을 <strong>선택·강조·생략</strong>하는 방식이 다름<br>
+              → 어떤 내용을 앞에 배치하는지, 어떤 이미지를 쓰는지, 제목을 어떻게 뽑는지에 따라 독자의 인식이 달라짐<br><br>
+              <span class="tag tag-red">핵심</span> 매체 자료를 읽을 때는 <strong>①누가 만들었나 ②무엇을 강조하나 ③빠진 정보는 없나</strong>를 비판적으로 파악해야 함
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4(1) 듣기·말하기 -->
+      <div class="scope-section">
+        <div class="scope-label">4.(1) 듣기·말하기 과정의 점검과 조정</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-korean">
+            <div class="unit-title">📌 메타인지적 듣기·말하기</div>
+            <div class="unit-detail">
+              <strong>메타인지</strong>: 자신의 사고 과정을 스스로 점검하고 조정하는 능력<br><br>
+              <span class="tag tag-red">듣기 점검</span><br>
+              • 말하는 사람의 의도·목적은 무엇인가?<br>
+              • 핵심 내용을 올바르게 파악했는가?<br>
+              • 내 편견이 이해를 방해하지는 않는가?<br><br>
+              <span class="tag tag-red">말하기 점검</span><br>
+              • 내 말이 상대에게 명확하게 전달되고 있는가?<br>
+              • 상대의 반응을 보며 내용이나 속도를 조절하고 있는가?<br>
+              • 목적에 맞는 어휘와 표현을 쓰고 있는가?
+            </div>
+          </div>
+
+          <div class="unit-item border-korean">
+            <div class="unit-title">📌 토의와 토론의 차이</div>
+            <div class="unit-detail">
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th></th><th>토의</th><th>토론</th></tr>
+                <tr><td class="key">목적</td><td>문제 해결 방안 협력적 모색</td><td>찬반 의견 대립, 설득</td></tr>
+                <tr><td class="key">참여자</td><td>협력 관계</td><td>대립 관계 (찬성 vs 반대)</td></tr>
+                <tr><td class="key">결과</td><td>최선의 방안 선택</td><td>판단은 청중·심판에게</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4(2) 효과적으로 발표하기 -->
+      <div class="scope-section">
+        <div class="scope-label">4.(2) 효과적으로 발표하기</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-korean">
+            <div class="unit-title">📌 발표 3요소 — 언어 / 준언어 / 비언어</div>
+            <div class="unit-detail">
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>종류</th><th>내용</th><th>예</th></tr>
+                <tr><td class="key">언어적 표현</td><td>말의 내용, 어휘 선택, 문장 구성</td><td>"이 문제는 세 가지로 나뉩니다"</td></tr>
+                <tr><td class="key">준언어적 표현</td><td>목소리 크기, 빠르기, 억양, 강세</td><td>강조할 때 천천히·크게</td></tr>
+                <tr><td class="key">비언어적 표현</td><td>표정, 시선, 몸짓, 자세</td><td>청중과 눈 맞춤, 적절한 제스처</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="unit-item border-korean">
+            <div class="unit-title">📌 발표 준비 단계</div>
+            <div class="unit-detail">
+              <strong>① 주제 선정</strong> → <strong>② 청중 분석</strong> (나이·관심·수준) → <strong>③ 자료 수집·선별</strong> → <strong>④ 개요 작성</strong> (도입-전개-마무리) → <strong>⑤ 시각 자료 제작</strong> → <strong>⑥ 예행 연습</strong><br><br>
+              <span class="tag tag-red">시각 자료 활용 시 주의</span><br>
+              • 너무 많은 정보를 한 슬라이드에 담지 않기<br>
+              • 말과 자료가 서로 보완 관계여야 함 (중복 낭독 ✗)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-box" style="margin-bottom:20px">
+        📎 <strong>교과서 해당 단원 + 선생님 프린트 전체가 시험 범위</strong> — 프린트 빠뜨리면 큰일!
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       📐 수학
+  ══════════════════════════════════════ -->
+  <div class="subject-card" data-subject="math">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="subject-icon color-math">📐</div>
+        <div class="card-meta">
+          <div class="subject-name text-math">수학</div>
+          <div class="subject-publisher">동아 (강옥기) · 6/30 2교시 10:25</div>
+        </div>
+      </div>
+      <div class="card-right">
+        <span class="unit-count">3·4단원</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <!-- 3단원 부등식 -->
+      <div class="scope-section">
+        <div class="scope-label">3단원. 부등식과 연립방정식 (p.60~p.142 이전 범위)</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-math">
+            <div class="unit-title">📘 부등식 기초 개념</div>
+            <div class="unit-detail">
+              <strong>부등식</strong>: 두 수 또는 식의 대소 관계를 부등호로 나타낸 식<br><br>
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>표현</th><th>부등호</th><th>의미</th></tr>
+                <tr><td class="key">a > b</td><td>&gt;</td><td>a는 b보다 크다</td></tr>
+                <tr><td class="key">a < b</td><td>&lt;</td><td>a는 b보다 작다</td></tr>
+                <tr><td class="key">a ≥ b</td><td>≥</td><td>a는 b보다 크거나 같다 (이상)</td></tr>
+                <tr><td class="key">a ≤ b</td><td>≤</td><td>a는 b보다 작거나 같다 (이하)</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="unit-item border-math">
+            <div class="unit-title">📘 부등식의 성질 — 시험에 꼭 나옴!</div>
+            <div class="unit-detail">
+              <strong>①</strong> a &lt; b 이면 a+c &lt; b+c, a-c &lt; b-c (양변에 같은 수 더하기·빼기 → 부등호 방향 유지)<br>
+              <strong>②</strong> a &lt; b, c &gt; 0 이면 ac &lt; bc, a/c &lt; b/c (양수 곱/나누기 → 방향 유지)<br>
+              <strong>③</strong> a &lt; b, c &lt; 0 이면 ac <u><strong>&gt;</strong></u> bc, a/c <u><strong>&gt;</strong></u> b/c<br>
+              <div class="warn-box"><strong>⚠ 핵심 주의!</strong> 음수를 곱하거나 나눌 때는 반드시 <strong>부등호 방향이 뒤집힌다!</strong></div>
+            </div>
+          </div>
+
+          <div class="unit-item border-math">
+            <div class="unit-title">📘 일차부등식 풀이법</div>
+            <div class="unit-detail">
+              <span class="tag tag-blue">정의</span> ax + b &lt; 0 형태 (단, a ≠ 0)<br><br>
+              <strong>풀이 순서:</strong><br>
+              ① 괄호 있으면 분배법칙으로 먼저 풀기<br>
+              ② x 항은 좌변, 상수는 우변으로 이항<br>
+              ③ 동류항 정리<br>
+              ④ x의 계수로 양변을 나누기 <strong>(음수이면 부등호 방향 반전!)</strong><br><br>
+              <div class="formula-box">
+                예) 3x - 2 &gt; 7<br>
+                → 3x &gt; 9<br>
+                → x &gt; 3 ✓<br><br>
+                예) -2x + 4 ≤ 10<br>
+                → -2x ≤ 6<br>
+                → x <strong>≥</strong> -3 ← 음수로 나눴으므로 방향 반전!
+              </div>
+            </div>
+          </div>
+
+          <div class="unit-item border-math">
+            <div class="unit-title">📘 일차부등식 활용 문제 유형</div>
+            <div class="unit-detail">
+              <span class="tag tag-blue">유형①</span> <strong>물건 구입</strong>: "x개를 사면 a원 이하" → 가격×x ≤ 예산<br>
+              <span class="tag tag-blue">유형②</span> <strong>속력·거리·시간</strong>: 거리=속력×시간 관계 이용<br>
+              <span class="tag tag-blue">유형③</span> <strong>평균</strong>: (합계) ÷ 횟수 ≥ 목표 점수<br>
+              <span class="tag tag-blue">유형④</span> <strong>농도</strong>: 소금 양 / 전체 양 × 100<br><br>
+              <div class="warn-box"><strong>체크!</strong> 답이 나왔으면 단위 확인 + 문제 조건에 맞는지 검토 필수</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-math">
+            <div class="unit-title">📘 연립방정식 — 미지수 2개, 방정식 2개</div>
+            <div class="unit-detail">
+              <strong>연립방정식의 해</strong>: 두 방정식을 동시에 만족하는 x, y의 값<br><br>
+              <span class="tag tag-blue">가감법</span> 두 방정식을 더하거나 빼서 미지수 하나를 없앰<br>
+              <div class="formula-box">
+                x + y = 5<br>
+                x - y = 1<br>
+                ─────── 더하면<br>
+                2x = 6 → x = 3 → y = 2
+              </div>
+              <br>
+              <span class="tag tag-blue">대입법</span> 한 식에서 x(또는 y)를 구해 다른 식에 대입<br>
+              <div class="formula-box">
+                y = 2x - 1 … ①<br>
+                3x + y = 9 … ②<br>
+                ②에 ① 대입: 3x + (2x-1) = 9<br>
+                5x = 10 → x = 2, y = 3
+              </div>
+            </div>
+          </div>
+
+          <div class="unit-item border-math">
+            <div class="unit-title">📘 연립방정식 해의 특수한 경우</div>
+            <div class="unit-detail">
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>상황</th><th>그래프</th><th>해</th></tr>
+                <tr><td class="key">두 직선 교점 1개</td><td>한 점에서 만남</td><td>해가 1개</td></tr>
+                <tr><td class="key">두 직선 평행</td><td>만나지 않음</td><td>해가 없음 (불능)</td></tr>
+                <tr><td class="key">두 직선 일치</td><td>완전히 겹침</td><td>해가 무수히 많음 (부정)</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4단원 일차함수 -->
+      <div class="scope-section">
+        <div class="scope-label">4단원. 일차함수와 그래프 (p.60~p.142)</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-math">
+            <div class="unit-title">📘 함수와 일차함수의 정의</div>
+            <div class="unit-detail">
+              <strong>함수</strong>: x의 값이 정해지면 y의 값이 <em>하나씩</em> 정해지는 관계 → y = f(x)<br><br>
+              <strong>일차함수</strong>: y = ax + b (a ≠ 0 — a가 0이면 상수함수, 일차함수 아님!)<br>
+              • a = <strong>기울기</strong> (slope), b = <strong>y절편</strong>
+            </div>
+          </div>
+
+          <div class="unit-item border-math">
+            <div class="unit-title">📘 기울기 완벽 이해</div>
+            <div class="unit-detail">
+              <div class="formula-box">
+                기울기(a) = (y의 증가량) ÷ (x의 증가량)<br>
+                = (y₂ - y₁) ÷ (x₂ - x₁)<br>
+                두 점 (x₁,y₁), (x₂,y₂)를 지날 때 사용
+              </div>
+              <br>
+              <table class="concept-table">
+                <tr><th>a 값</th><th>그래프 모양</th></tr>
+                <tr><td class="key">a &gt; 0</td><td>오른쪽 위 방향 (증가)</td></tr>
+                <tr><td class="key">a &lt; 0</td><td>오른쪽 아래 방향 (감소)</td></tr>
+                <tr><td class="key">|a| 클수록</td><td>기울기 가파름 (y축에 가까움)</td></tr>
+                <tr><td class="key">|a| 작을수록</td><td>기울기 완만 (x축에 가까움)</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="unit-item border-math">
+            <div class="unit-title">📘 일차함수 그래프 그리기</div>
+            <div class="unit-detail">
+              <strong>방법①</strong> y절편(0, b)과 기울기 이용<br>
+              → y절편 점 찍기 → 기울기(a/1)만큼 이동해 점 하나 더 찍기 → 직선으로 연결<br><br>
+              <strong>방법②</strong> x=0, y=0 대입해 x절편·y절편 구하기<br>
+              → 두 점 (-b/a, 0)과 (0, b) 연결
+            </div>
+          </div>
+
+          <div class="unit-item border-math">
+            <div class="unit-title">📘 일차함수의 식 구하기</div>
+            <div class="unit-detail">
+              <span class="tag tag-blue">경우①</span> 기울기 a와 y절편 b를 알 때 → y = ax + b 바로 쓰기<br><br>
+              <span class="tag tag-blue">경우②</span> 기울기 a와 한 점 (x₁, y₁)을 알 때<br>
+              <div class="formula-box">y - y₁ = a(x - x₁) → y = ax + b 정리</div>
+              <br>
+              <span class="tag tag-blue">경우③</span> 두 점 (x₁,y₁), (x₂,y₂)를 알 때<br>
+              → 먼저 기울기 a 계산 → 경우② 방법 적용
+            </div>
+          </div>
+
+          <div class="unit-item border-math">
+            <div class="unit-title">📘 일차함수와 일차방정식의 관계</div>
+            <div class="unit-detail">
+              • ax + by + c = 0 형태의 일차방정식을 y에 대해 풀면 일차함수 식이 됨<br>
+              • <strong>x = p</strong>: x축에 수직인 직선 (기울기 없음, y축과 평행)<br>
+              • <strong>y = q</strong>: x축에 평행인 수평 직선 (기울기 = 0)<br><br>
+              <span class="tag tag-blue">연립방정식의 해</span> = <strong>두 직선의 교점의 좌표</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       🔬 과학
+  ══════════════════════════════════════ -->
+  <div class="subject-card" data-subject="science">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="subject-icon color-science">🔬</div>
+        <div class="card-meta">
+          <div class="subject-name text-science">과학</div>
+          <div class="subject-publisher">미래엔 · 7/1 3교시 11:30</div>
+        </div>
+      </div>
+      <div class="card-right">
+        <span class="unit-count">Ⅲ·Ⅳ단원 · 심화</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <!-- 과학A: 빛과 파동 -->
+      <div class="scope-section">
+        <div class="scope-label">과학A — Ⅲ. 빛과 파동 (교과서 p.98~133 + 3단원 학습지)</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 파동의 기본 개념</div>
+            <div class="unit-detail">
+              <strong>파동</strong>: 한 곳에서 생긴 진동(에너지)이 매질을 통해 주위로 퍼져 나가는 현상<br>
+              → <strong>매질 자체는 이동하지 않고 제자리에서 진동만 한다!</strong> (물 위에 띄운 종이배는 제자리에서 위아래로만 흔들림 — 파도를 따라 이동 ✗)<br><br>
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>요소</th><th>정의</th><th>단위</th></tr>
+                <tr><td class="key">마루</td><td>파동에서 가장 높은 부분</td><td>-</td></tr>
+                <tr><td class="key">골</td><td>파동에서 가장 낮은 부분</td><td>-</td></tr>
+                <tr><td class="key">진폭</td><td>진동의 중심(평형점)에서 마루(또는 골)까지의 거리</td><td>m, cm</td></tr>
+                <tr><td class="key">파장(λ)</td><td>마루에서 다음 마루까지(또는 골~골) 거리 = 파동 1개의 길이</td><td>m, cm</td></tr>
+                <tr><td class="key">진동수(f)</td><td>1초 동안 매질이 진동하는 횟수</td><td>Hz</td></tr>
+                <tr><td class="key">주기(T)</td><td>매질이 한 번 진동하는 데 걸리는 시간</td><td>s</td></tr>
+              </table>
+              <div class="formula-box">
+                파동의 속력(v) = 파장(λ) ÷ 주기(T) = 파장(λ) × 진동수(f)<br>
+                주기(T) = 1 ÷ 진동수(f)&nbsp;&nbsp;|&nbsp;&nbsp;진동수(f) = 1 ÷ 주기(T)
+              </div>
+              <div class="warn-box"><strong>⚠ 그래프 문제 주의!</strong> '변위-시간 그래프'에서는 가로축 한 칸이 곧 주기(T)와 연결되고, '변위-거리(위치) 그래프'에서는 가로축 한 칸이 파장(λ)과 연결됨. 두 그래프를 헷갈리면 진동수·파장을 바꿔 계산하는 실수가 가장 많이 나옴 — 그래프 종류부터 확인!</div>
+              <div class="tip-box" style="margin:10px 0 0">💡 <strong>진폭이 클수록</strong> 파동이 가진 에너지가 크다 (소리라면 더 크게 들림, 빛이라면 더 밝게 보임)</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 빛의 반사 법칙 — 정확한 정의부터!</div>
+            <div class="unit-detail">
+              <strong>법선</strong>: 거울(반사면)에 수직으로 그은 가상의 선 — 입사각·반사각은 항상 거울면이 아니라 <strong>법선을 기준</strong>으로 측정!<br>
+              <strong>입사각</strong>: 입사 광선과 법선 사이의 각 / <strong>반사각</strong>: 반사 광선과 법선 사이의 각<br><br>
+              <div class="formula-box"><strong>반사 법칙: 입사각 = 반사각</strong> (항상 성립, 예외 없음)</div>
+              <div class="warn-box"><strong>⚠ 자주 틀리는 포인트</strong> 문제에서 거울면과 광선이 이루는 각을 줬을 때, 이건 입사각이 아님! 90°에서 빼야 진짜 입사각(법선 기준)이 나옴. 예) 거울면과 50° → 입사각은 90°−50°=40°</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 평면거울 — 상의 특징과 작도</div>
+            <div class="unit-detail">
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>특징</th><th>내용</th></tr>
+                <tr><td class="key">상의 종류</td><td><strong>허상</strong> (실제 빛이 모이지 않고, 빛이 반대쪽에서 오는 것처럼 보이는 상)</td></tr>
+                <tr><td class="key">크기</td><td>물체와 <strong>같음</strong> (확대·축소 없음)</td></tr>
+                <tr><td class="key">거울과의 거리</td><td>물체-거울 거리 = 상-거울 거리 (대칭)</td></tr>
+                <tr><td class="key">방향</td><td><strong>좌우 반전</strong>(상하는 그대로!) — 글자를 비추면 거꾸로가 아니라 좌우로 뒤집혀 보임</td></tr>
+              </table>
+              <span class="tag tag-green">작도법</span> 물체의 한 점에서 거울에 수직으로 내린 거리를 거울 반대쪽에 똑같이 연장한 점이 그 점의 상의 위치<br>
+              <div class="tip-box" style="margin:10px 0 0">💡 거울 앞에서 한 걸음(1m) 다가가면 거울 속 내 모습과의 거리는 2m가 아니라 <strong>2m 줄어든다</strong>(나-거울 거리, 상-거울 거리 둘 다 1m씩 줄기 때문) — 자주 나오는 함정 문제!</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 오목 거울 — 물체 위치별 상 (★최다 출제)</div>
+            <div class="unit-detail">
+              가운데가 안으로 들어간 거울. 평행하게 들어온 빛을 <strong>한 점(초점, F)</strong>으로 모음(수렴) → 빛을 모으는 성질!<br><br>
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>물체 위치</th><th>상의 종류</th><th>크기</th><th>방향</th></tr>
+                <tr><td class="key">초점 거리보다 먼 곳</td><td>실상</td><td>축소</td><td>거꾸로(도립)</td></tr>
+                <tr><td class="key">초점 거리만큼 (=2초점 위치 등)</td><td>실상</td><td>물체와 같음</td><td>거꾸로(도립)</td></tr>
+                <tr><td class="key">초점과 거울 사이</td><td>실상</td><td>확대</td><td>거꾸로(도립)</td></tr>
+                <tr><td class="key">정확히 초점(F) 위</td><td>상이 생기지 않음</td><td>-</td><td>(빛이 평행하게 나가 모이지 않음)</td></tr>
+                <tr><td class="key">초점보다 거울에 더 가까울 때</td><td><strong>허상</strong></td><td><strong>확대</strong></td><td>바로 선 모습(정립)</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ 핵심 포인트</strong> 오목 거울은 물체 위치에 따라 실상·허상이 둘 다 나옴! "오목 거울 = 항상 실상"이라고 외우면 틀림. 물체가 초점보다 가까이 있을 때만 확대된 허상(=화장 거울 원리)이 생긴다.</div>
+              <span class="tag tag-green">실생활 예</span> 멀리 있는 빛을 모음 → 손전등 반사판, 태양열 조리기 / 가까이서 확대된 허상 → 화장 거울, 치과용 거울, 자동차 헤드라이트 내부 반사판
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 볼록 거울 — 항상 똑같다! (단순하지만 자주 나옴)</div>
+            <div class="unit-detail">
+              가운데가 바깥으로 나온 거울. 평행하게 들어온 빛을 <strong>퍼뜨림(발산)</strong><br><br>
+              <span class="tag tag-green">상의 특징</span> 물체 위치와 관계없이 <strong>항상 허상·축소·바로 선 모습(정립)</strong>으로만 보임 (예외 없음!)<br>
+              <span class="tag tag-green">장점</span> 작은 거울로도 넓은 범위를 비춰볼 수 있음 (시야가 넓음)<br><br>
+              <strong>실생활 예</strong>: 도로의 凸 반사경(굽은 길), 자동차 사이드미러("사물이 거울에 보이는 것보다 실제로 가까이 있음" 문구가 붙는 이유 — 축소되어 더 멀어 보이기 때문), 편의점·매장의 감시 거울
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 거울 비교 한눈에 정리</div>
+            <div class="unit-detail">
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th></th><th>평면거울</th><th>오목 거울</th><th>볼록 거울</th></tr>
+                <tr><td class="key">빛의 성질</td><td>반사만</td><td>모음(수렴)</td><td>퍼뜨림(발산)</td></tr>
+                <tr><td class="key">상의 종류</td><td>항상 허상</td><td>실상 or 허상</td><td>항상 허상</td></tr>
+                <tr><td class="key">크기</td><td>같음</td><td>축소·동일·확대 다양</td><td>항상 축소</td></tr>
+                <tr><td class="key">방향</td><td>정립(좌우반전)</td><td>도립 or 정립</td><td>항상 정립</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 빛의 굴절</div>
+            <div class="unit-detail">
+              빛이 한 매질에서 다른 매질로 들어갈 때, 두 매질에서 빛의 <strong>속력이 다르기 때문에</strong> 경계면에서 진행 방향이 꺾이는 현상<br>
+              (속력이 같으면 굴절 없이 그대로 직진 — 굴절의 원인은 100% '속력 차이')<br><br>
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>상황</th><th>속력 변화</th><th>굴절 방향</th></tr>
+                <tr><td class="key">공기 → 물(또는 유리) (소한 매질→밀한 매질)</td><td>느려짐</td><td><strong>법선 쪽으로</strong> 꺾임 (굴절각 &lt; 입사각)</td></tr>
+                <tr><td class="key">물(또는 유리) → 공기 (밀한 매질→소한 매질)</td><td>빨라짐</td><td><strong>법선에서 먼 쪽으로</strong> 꺾임 (굴절각 &gt; 입사각)</td></tr>
+                <tr><td class="key">수직으로 입사 (입사각 0°)</td><td>속력만 변함</td><td>꺾이지 않고 그대로 직진</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ 빛이 빠른 매질로 갈 때 vs 느린 매질로 갈 때</strong><br>
+              • 느린 매질로 들어갈 때 → 법선에 가까워짐(꺾이는 각이 작아짐)<br>
+              • 빠른 매질로 들어갈 때 → 법선에서 멀어짐(꺾이는 각이 커짐)<br>
+              "물 속에 있는 다리가 짧아 보인다", "물에 꽂힌 빨대가 꺾여 보인다", "물고기가 실제 위치보다 떠 보인다" 같은 현상 모두 이 원리!</div>
+              <span class="tag tag-green">단색광 분산</span> 프리즘에 백색광(태양광)을 통과시키면 색마다 굴절하는 정도가 달라 무지개色으로 분리됨 (빨강은 적게, 보라는 많이 꺾임)
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 굴절 현상 — 자주 나오는 그림 문제 패턴</div>
+            <div class="unit-detail">
+              <strong>① 물속에 잠긴 막대가 꺾여 보이는 이유</strong>: 막대 아랫부분(물속)에서 나온 빛이 물 표면에서 굴절하여 눈에 들어옴 → 우리 눈은 빛이 꺾이지 않고 직진한 것처럼 인식하여, 실제 위치보다 위쪽(얕은 곳)에 있는 것처럼 보임<br><br>
+              <strong>② 동전이 실제보다 떠 보이는 이유</strong>: 물 속 동전에서 나온 빛이 물 표면에서 공기 쪽으로 굴절(법선에서 멀어짐) → 그 빛의 연장선을 따라가면 실제 동전보다 얕은 곳에 동전이 있는 것처럼 느껴짐<br><br>
+              <strong>③ 작도 순서</strong>: ⓐ 입사 광선 그리기 → ⓑ 경계면에 법선 긋기 → ⓒ 매질 밀도 비교(밀한 쪽으로 갈 때는 법선 쪽으로, 소한 쪽으로 갈 때는 법선에서 먼 쪽으로) → ⓓ 굴절 광선 그리기
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 볼록 렌즈 — 물체 위치별 상 (★최다 출제, 오목 거울과 패턴 유사)</div>
+            <div class="unit-detail">
+              가운데가 두꺼운 렌즈. 평행하게 들어온 빛을 굴절시켜 <strong>초점(F)에 모음(수렴)</strong><br><br>
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>물체 위치</th><th>상의 종류</th><th>크기</th><th>방향</th></tr>
+                <tr><td class="key">초점 거리의 2배보다 먼 곳</td><td>실상</td><td>축소</td><td>거꾸로(도립)</td></tr>
+                <tr><td class="key">초점 거리의 2배 위치</td><td>실상</td><td>물체와 같음</td><td>거꾸로(도립)</td></tr>
+                <tr><td class="key">초점과 2배 초점 사이</td><td>실상</td><td>확대</td><td>거꾸로(도립)</td></tr>
+                <tr><td class="key">정확히 초점(F) 위</td><td>상이 생기지 않음</td><td>-</td><td>(빛이 평행하게 나가 안 모임)</td></tr>
+                <tr><td class="key">초점보다 렌즈에 더 가까울 때</td><td><strong>허상</strong></td><td><strong>확대</strong></td><td>바로 선 모습(정립)</td></tr>
+              </table>
+              <div class="tip-box" style="margin:10px 0 0">💡 <strong>오목 거울과 완전히 같은 패턴!</strong> "초점 안쪽=확대된 허상, 초점 바깥쪽=실상(거꾸로)"만 기억하면 거울·렌즈 문제를 동시에 풀 수 있음</div>
+              <strong>활용</strong>: 돋보기(물체를 초점 안에 두고 봄 → 확대된 허상), 카메라·눈의 수정체·망원경의 대물렌즈(초점 밖 실상 활용), 원시 교정용 안경(빛을 더 모아줘야 하므로 볼록 렌즈)
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 오목 렌즈 — 항상 똑같다</div>
+            <div class="unit-detail">
+              가운데가 얇은 렌즈. 평행하게 들어온 빛을 <strong>퍼뜨림(발산)</strong><br><br>
+              <span class="tag tag-green">상의 특징</span> 물체 위치와 관계없이 <strong>항상 허상·축소·바로 선 모습(정립)</strong> (볼록 거울과 동일한 패턴!)<br>
+              <strong>활용</strong>: 근시 교정용 안경 (망막보다 앞에서 모이는 빛을 퍼뜨려 정확히 망막에 초점이 맺히게 함)
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 거울·렌즈 종합 비교표 (시험 직전 마지막 체크!)</div>
+            <div class="unit-detail">
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>도구</th><th>빛 모음 성질</th><th>상의 종류</th></tr>
+                <tr><td class="key">오목 거울</td><td>수렴(모음)</td><td>위치 따라 실상/허상</td></tr>
+                <tr><td class="key">볼록 거울</td><td>발산(퍼짐)</td><td>항상 허상·축소</td></tr>
+                <tr><td class="key">볼록 렌즈</td><td>수렴(모음)</td><td>위치 따라 실상/허상</td></tr>
+                <tr><td class="key">오목 렌즈</td><td>발산(퍼짐)</td><td>항상 허상·축소</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ 외우는 팁</strong> '오목'은 거울이냐 렌즈냐에 따라 성질이 다름(거울은 오목=모음, 렌즈는 오목=발산)! 모양 이름만 보고 헷갈리지 말고 "거울의 오목=볼록렌즈와 같은 역할, 거울의 볼록=오목렌즈와 같은 역할"로 짝지어 기억하면 안 헷갈림.</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 소리의 발생과 전파</div>
+            <div class="unit-detail">
+              <strong>소리의 발생</strong>: 물체가 진동하면서 주변 매질(공기 등)을 진동시켜 그 진동이 퍼져 나가는 것<br>
+              <strong>소리의 전파</strong>: 반드시 <strong>매질이 있어야 전파됨</strong> → 진공(매질이 없는 공간)에서는 소리가 전달되지 않음(달에서는 소리가 안 들림)<br>
+              매질의 종류에 따라 소리의 속력이 다름: 일반적으로 <strong>기체 &lt; 액체 &lt; 고체</strong> 순으로 빠름 (분자 사이 거리가 가까울수록 진동을 빨리 전달)
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 소리의 3요소 (★최다 출제 — 그래프 해석 필수)</div>
+            <div class="unit-detail">
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>요소</th><th>결정 요인</th><th>그래프에서 비교</th></tr>
+                <tr><td class="key">크기(음량)</td><td>진폭</td><td>진폭이 클수록 큰 소리 (그래프 세로 폭이 큼)</td></tr>
+                <tr><td class="key">높낮이(음고)</td><td>진동수</td><td>진동수가 클수록(파형이 촘촘할수록) 높은 소리</td></tr>
+                <tr><td class="key">음색</td><td>파형의 모양</td><td>같은 높이·크기여도 파형 생김새가 다르면 다른 악기·다른 사람 목소리로 들림</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ 그래프 비교 문제 풀이 순서</strong><br>
+              ① 세로축(진폭) 비교 → 큰 소리/작은 소리 판단<br>
+              ② 가로축 한 파장 안의 진동 횟수(촘촘함) 비교 → 높은 소리/낮은 소리 판단<br>
+              ③ 파형의 모양 비교 → 같은 음인지, 다른 소리(음색)인지 판단<br>
+              세 가지를 한 그래프에서 동시에 물어보는 문제가 가장 많이 출제됨!</div>
+              <span class="tag tag-green">현악기 예</span> 줄을 팽팽하게 조일수록·짧게 잡을수록 진동수↑ → 높은 소리<br>
+              <span class="tag tag-green">관악기 예</span> 관의 길이가 짧을수록 진동수↑ → 높은 소리
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 과학B: 물질의 구성 -->
+      <div class="scope-section">
+        <div class="scope-label">과학B — Ⅳ. 물질의 구성 (교과서 p.138~167 + 4단원 학습지)</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 원소 — 기본 정의와 주기율표 위치</div>
+            <div class="unit-detail">
+              <strong>원소</strong>: 더 이상 다른 물질로 분해되지 않는, 물질을 이루는 기본 성분 (현재 118종 발견)<br><br>
+              <span class="tag tag-green">원소 기호 표기법</span> 알파벳 <strong>첫 글자는 대문자</strong>, 그 다음 글자는 <strong>소문자</strong> (반드시 순서 지킬 것 — 대소문자 틀리면 오답)<br>
+              <table class="concept-table" style="margin-top:8px">
+                <tr><th>원소</th><th>기호</th><th>원소</th><th>기호</th></tr>
+                <tr><td class="key">수소</td><td>H</td><td class="key">헬륨</td><td>He</td></tr>
+                <tr><td class="key">탄소</td><td>C</td><td class="key">질소</td><td>N</td></tr>
+                <tr><td class="key">산소</td><td>O</td><td class="key">나트륨</td><td>Na</td></tr>
+                <tr><td class="key">마그네슘</td><td>Mg</td><td class="key">알루미늄</td><td>Al</td></tr>
+                <tr><td class="key">황</td><td>S</td><td class="key">염소</td><td>Cl</td></tr>
+                <tr><td class="key">칼륨</td><td>K</td><td class="key">칼슘</td><td>Ca</td></tr>
+                <tr><td class="key">철</td><td>Fe</td><td class="key">구리</td><td>Cu</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ 헷갈리기 쉬운 기호</strong> 나트륨=Na(영어 sodium이 아니라 라틴어 Natrium에서 옴), 칼륨=K(Kalium), 철=Fe(Ferrum) — 영어 이름과 다른 원소기호는 시험에 단독 문제로도 잘 나옴!</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 원자의 구조 (★최다 출제)</div>
+            <div class="unit-detail">
+              <strong>원자</strong>: 물질을 이루는 기본 입자. 중심의 <strong>원자핵</strong>과 그 주위를 도는 <strong>전자</strong>로 구성<br><br>
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>구성 입자</th><th>위치</th><th>전하</th><th>비고</th></tr>
+                <tr><td class="key">양성자</td><td>원자핵 속</td><td>+(양전하)</td><td>원자핵의 무게 대부분 차지</td></tr>
+                <tr><td class="key">중성자</td><td>원자핵 속</td><td>전하 없음(중성)</td><td>원자핵의 무게 대부분 차지</td></tr>
+                <tr><td class="key">전자</td><td>원자핵 주위(전자껍질)</td><td>−(음전하)</td><td>질량이 매우 작아 무시 가능</td></tr>
+              </table>
+              <div class="formula-box">
+                <strong>원자 번호 = 양성자 수</strong><br>
+                중성 원자에서는 <strong>양성자 수 = 전자 수</strong> (전체 전하량이 0이 되어야 하므로)<br>
+                질량수 = 양성자 수 + 중성자 수
+              </div>
+              <div class="warn-box"><strong>⚠ 가장 많이 나오는 함정</strong> "원자는 양성자 수와 전자 수가 같아서 전기적으로 중성"이라는 문장 → 이온이 되면(전자를 잃거나 얻으면) 이 균형이 깨져서 전하를 띠게 됨! 원자=중성, 이온=전하 띤 입자라는 차이를 명확히 구분.</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 분자 — 물질의 성질을 갖는 가장 작은 입자</div>
+            <div class="unit-detail">
+              <strong>분자</strong>: 원자가 일정한 수로 결합하여 만들어진, <strong>독립적인 입자로 존재하며 물질의 성질을 나타내는</strong> 가장 작은 단위<br>
+              (원자 그 자체는 물질의 성질을 가지지 못하는 경우가 많음 — 예: 수소 원자 1개만으로는 수소 기체의 성질을 보이지 않고, H₂ 분자 상태여야 함)<br><br>
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>물질</th><th>화학식</th><th>구성</th></tr>
+                <tr><td class="key">수소</td><td>H₂</td><td>수소 원자 2개</td></tr>
+                <tr><td class="key">산소</td><td>O₂</td><td>산소 원자 2개</td></tr>
+                <tr><td class="key">물</td><td>H₂O</td><td>수소 2 + 산소 1</td></tr>
+                <tr><td class="key">이산화탄소</td><td>CO₂</td><td>탄소 1 + 산소 2</td></tr>
+                <tr><td class="key">암모니아</td><td>NH₃</td><td>질소 1 + 수소 3</td></tr>
+                <tr><td class="key">메테인</td><td>CH₄</td><td>탄소 1 + 수소 4</td></tr>
+                <tr><td class="key">오존</td><td>O₃</td><td>산소 원자 3개</td></tr>
+              </table>
+              <div class="tip-box" style="margin:10px 0 0">💡 <strong>화학식 읽는 법</strong>: 원소 기호 오른쪽 아래 숫자는 그 원자의 개수. 숫자가 없으면 1개라는 뜻(예: H₂O에서 O는 1개). 분자식 앞의 숫자(예: 2H₂O)는 분자 전체의 개수!</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 이온의 형성 원리</div>
+            <div class="unit-detail">
+              원자는 원래 전기적으로 중성이지만, <strong>전자를 잃거나 얻으면</strong> 양성자 수와 전자 수가 달라져 전하를 띠게 됨 → 이를 <strong>이온</strong>이라 함<br><br>
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>종류</th><th>형성 과정</th><th>전하</th><th>이온식 표기법</th></tr>
+                <tr><td class="key">양이온</td><td>원자가 전자를 <strong>잃음</strong></td><td>(+)</td><td>원소기호 오른쪽 위에 잃은 전자 수만큼 + 표시</td></tr>
+                <tr><td class="key">음이온</td><td>원자가 전자를 <strong>얻음</strong></td><td>(−)</td><td>원소기호 오른쪽 위에 얻은 전자 수만큼 − 표시</td></tr>
+              </table>
+              <div class="formula-box">
+                예) 나트륨 원자(Na)가 전자 1개를 잃음 → Na⁺ (나트륨 이온)<br>
+                예) 염소 원자(Cl)가 전자 1개를 얻음 → Cl⁻ (염화 이온)<br>
+                예) 마그네슘 원자(Mg)가 전자 2개를 잃음 → Mg²⁺<br>
+                ※ 전하가 1일 때는 숫자 1을 쓰지 않고 +, −만 표기! (Na¹⁺ ✗ → Na⁺ ✓)
+              </div>
+              <table class="concept-table" style="margin-top:8px">
+                <tr><th>양이온</th><th>이온식</th><th>음이온</th><th>이온식</th></tr>
+                <tr><td class="key">수소 이온</td><td>H⁺</td><td class="key">염화 이온</td><td>Cl⁻</td></tr>
+                <tr><td class="key">나트륨 이온</td><td>Na⁺</td><td class="key">수산화 이온</td><td>OH⁻</td></tr>
+                <tr><td class="key">칼륨 이온</td><td>K⁺</td><td class="key">산화 이온</td><td>O²⁻</td></tr>
+                <tr><td class="key">암모늄 이온</td><td>NH₄⁺</td><td class="key">황산 이온</td><td>SO₄²⁻</td></tr>
+                <tr><td class="key">칼슘 이온</td><td>Ca²⁺</td><td class="key">탄산 이온</td><td>CO₃²⁻</td></tr>
+                <tr><td class="key">마그네슘 이온</td><td>Mg²⁺</td><td class="key">질산 이온</td><td>NO₃⁻</td></tr>
+                <tr><td class="key">알루미늄 이온</td><td>Al³⁺</td><td class="key">아이오딘화 이온</td><td>I⁻</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 이온 결합과 이온 화합물의 화학식</div>
+            <div class="unit-detail">
+              <strong>이온 결합</strong>: 양이온과 음이온이 <strong>전기적 인력</strong>으로 서로 끌어당겨 결합하는 것 → 이온 화합물 생성<br><br>
+              <span class="tag tag-green">화학식 만드는 법</span> 양이온과 음이온의 <strong>전체 전하량의 합이 0</strong>이 되도록 개수를 맞춤<br>
+              <div class="formula-box">
+                예) Na⁺ + Cl⁻ → <strong>NaCl</strong> (전하 +1과 −1이 만나 0)<br>
+                예) Ca²⁺ + Cl⁻ → <strong>CaCl₂</strong> (Ca²⁺ 1개당 Cl⁻ 2개 필요: +2와 −1×2=−2)<br>
+                예) Na⁺ + OH⁻ → <strong>NaOH</strong><br>
+                예) Mg²⁺ + O²⁻ → <strong>MgO</strong> (1:1로 전하가 이미 맞음)
+              </div>
+              <div class="warn-box"><strong>⚠ 시험 빈출 유형</strong> "다음 양이온과 음이온으로 만들 수 있는 화학식을 쓰시오" — 전하의 절댓값을 서로 바꿔서 아래 첨자로 쓰면 빠르게 풀 수 있음 (교차법). 단, 이미 약분 가능한 비율이면 간단히 줄여서 쓸 것 (예: Mg²⁺와 O²⁻ → Mg₂O₂가 아니라 MgO)</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 이온의 확인 — 앙금 생성 반응 (★단원 마지막 핵심)</div>
+            <div class="unit-detail">
+              두 가지 수용액을 섞었을 때 특정 양이온과 음이온이 결합해 <strong>물에 잘 녹지 않는 고체(앙금)</strong>를 생성하는 반응. 이걸 이용해 용액 속에 어떤 이온이 들어있는지 확인할 수 있음<br><br>
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>양이온</th><th>음이온</th><th>생성되는 앙금</th><th>색</th></tr>
+                <tr><td class="key">Ag⁺ (은 이온)</td><td>Cl⁻ (염화 이온)</td><td>AgCl</td><td>흰색</td></tr>
+                <tr><td class="key">Ca²⁺ (칼슘 이온)</td><td>CO₃²⁻ (탄산 이온)</td><td>CaCO₃</td><td>흰색</td></tr>
+                <tr><td class="key">Pb²⁺ (납 이온)</td><td>I⁻ (아이오딘화 이온)</td><td>PbI₂</td><td>노란색</td></tr>
+                <tr><td class="key">Ba²⁺ (바륨 이온)</td><td>SO₄²⁻ (황산 이온)</td><td>BaSO₄</td><td>흰색</td></tr>
+              </table>
+              <div class="tip-box" style="margin:10px 0 0">💡 실험에서 두 무색 용액을 섞었을 때 갑자기 뿌옇게 흐려지거나 색깔이 있는 가루가 생기면 앙금 생성 반응! 학습지의 실험 결과표·색깔 문제로 자주 출제됨 — 표의 짝을 통째로 외워두면 유리함</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-science">
+            <div class="unit-title">🟢 순물질과 혼합물</div>
+            <div class="unit-detail">
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>구분</th><th>정의</th><th>예</th></tr>
+                <tr><td class="key">순물질 - 홑원소 물질</td><td>한 종류의 원소로만 이루어짐</td><td>산소(O₂), 철(Fe), 금(Au), 다이아몬드(C)</td></tr>
+                <tr><td class="key">순물질 - 화합물</td><td>2종 이상의 원소가 <strong>일정한 비율로 화학적</strong> 결합</td><td>물(H₂O), 소금(NaCl), 이산화탄소(CO₂)</td></tr>
+                <tr><td class="key">혼합물</td><td>2종 이상의 순물질이 <strong>일정하지 않은 비율로 물리적</strong>으로 섞임</td><td>공기, 소금물, 합금(황동·청동), 우유</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ 화합물 vs 혼합물 구분 핵심</strong><br>
+              • 화합물: 화학 결합으로 새로운 성질의 물질이 됨 (성분 원소의 성질 사라짐, 화학식 하나로 표현 가능)<br>
+              • 혼합물: 성분 물질 각각의 성질이 그대로 유지됨, 화학식 하나로 표현 불가능 (끓는점·녹는점이 일정하지 않음)</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tip-box" style="margin-bottom:20px">
+        ⚡ <strong>3단원·4단원 학습지 전체 포함</strong> — 학습지에만 나오는 내용 꼭 확인!
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       🏛️ 역사
+  ══════════════════════════════════════ -->
+  <div class="subject-card" data-subject="history">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="subject-icon color-history">🏛️</div>
+        <div class="card-meta">
+          <div class="subject-name text-history">역사</div>
+          <div class="subject-publisher">비상 · 7/2 2교시 10:25</div>
+        </div>
+      </div>
+      <div class="card-right">
+        <span class="unit-count">Ⅰ~Ⅳ단원 · 심화</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <!-- Ⅰ 인류의 출현과 선사 문화 -->
+      <div class="scope-section">
+        <div class="scope-label">Ⅱ. 문명의 발생과 고대 세계의 형성 — 01. 선사 문화와 문명의 특징</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 인류의 출현과 진화</div>
+            <div class="unit-detail">
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>인류</th><th>특징</th></tr>
+                <tr><td class="key">오스트랄로피테쿠스</td><td>최초의 인류(약 390만 년 전), 직립 보행 시작 ("남쪽의 원숭이"라는 뜻)</td></tr>
+                <tr><td class="key">호모 에렉투스</td><td>"곧선 사람" — 불 사용, 사냥 시작, 아시아·유럽으로 이동(베이징 원인, 자와 원인 등)</td></tr>
+                <tr><td class="key">호모 네안데르탈렌시스</td><td>"네안데르 사람" — 시신 매장 풍습(최초로 죽음을 의식한 행위), 유럽·서아시아 일대에 분포했으나 멸종(현생 인류의 직계 조상은 아님)</td></tr>
+                <tr><td class="key">호모 사피엔스</td><td>"슬기 사람" — 현생 인류의 직접 조상, 동굴 벽화(라스코·알타미라) 제작, 정교한 매장 풍습</td></tr>
+              </table>
+              <div class="tip-box" style="margin:10px 0 0">💡 인류 진화의 핵심 순서: 직립 보행(오스트랄로피테쿠스) → 두 손 자유로움·도구 사용 → 두뇌 용량 증가 → 불 사용(호모 에렉투스) → 매장 풍습(호모 네안데르탈렌시스) → 동굴 벽화 등 정교한 문화(호모 사피엔스). 이 인과관계 순서를 묻는 문제가 자주 나옴!</div>
+              <div class="warn-box" style="margin-top:8px"><strong>⚠ 호모 네안데르탈렌시스 주의</strong> 현생 인류(호모 사피엔스)의 직계 조상이 <strong>아니라</strong>, 비슷한 시기에 유럽·서아시아에 존재했다가 멸종한 별도의 인류! "모든 호모종이 한 줄로 이어진다"고 착각하지 말 것 — 네안데르탈렌시스와 사피엔스는 한동안 공존했던 사이.</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 구석기 시대</div>
+            <div class="unit-detail">
+              <span class="tag tag-orange">도구</span> 뗀석기(돌을 깨뜨려 만듦) — 주먹도끼, 찍개, 긁개<br>
+              <span class="tag tag-orange">생활</span> 사냥·채집·물고기잡이로 식량 확보, <strong>이동 생활</strong>(먹을 것을 찾아 옮겨다님)<br>
+              <span class="tag tag-orange">주거</span> 동굴, 막집(임시 거처)<br>
+              <span class="tag tag-orange">사회</span> 무리 생활, 평등한 공동체 사회 (계급 없음)<br>
+              <span class="tag tag-orange">불의 사용</span> 음식 익혀 먹기, 추위·맹수로부터 보호, 어둠 밝히기
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 신석기 시대 — 농경의 시작 (★최다 출제)</div>
+            <div class="unit-detail">
+              <span class="tag tag-orange">도구</span> 간석기(돌을 갈아서 만듦, 더 정교함), 토기(빗살무늬 토기 등 — 식량 저장·조리용)<br>
+              <span class="tag tag-orange">신석기 혁명</span> <strong>농경과 목축의 시작</strong> → 식량을 직접 생산 → <strong>정착 생활</strong> 시작<br>
+              <span class="tag tag-orange">주거</span> 강가·해안가에 움집을 짓고 정착<br>
+              <span class="tag tag-orange">사회 변화</span> 잉여 생산물 발생 → 사유 재산 개념 등장 → 이후 계급 사회로 발전하는 토대 마련<br>
+              <div class="warn-box"><strong>⚠ 구석기 vs 신석기 비교가 단골 문제!</strong></div>
+              <table class="concept-table" style="margin-top:8px">
+                <tr><th></th><th>구석기</th><th>신석기</th></tr>
+                <tr><td class="key">도구</td><td>뗀석기</td><td>간석기, 토기</td></tr>
+                <tr><td class="key">경제</td><td>사냥·채집(자연 채취)</td><td>농경·목축(직접 생산)</td></tr>
+                <tr><td class="key">생활</td><td>이동 생활</td><td>정착 생활</td></tr>
+                <tr><td class="key">주거</td><td>동굴, 막집</td><td>움집</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 문명의 형성 — 공통 조건</div>
+            <div class="unit-detail">
+              4대 문명 모두 <strong>큰 강 유역</strong>에서 발생한 공통점이 있음 → 이유: 강물로 농사에 유리(비옥한 토지), 교통·교역에 편리<br><br>
+              <strong>문명 발생의 일반적 순서</strong>: 농경 발달 → 잉여 생산물 증가 → 계급 분화(지배층 등장) → 도시 형성 → 국가 성립 → <strong>문자 사용</strong>(역사 시대의 시작 기준)
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 4대 문명 비교</div>
+            <div class="unit-detail">
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>문명</th><th>강</th><th>특징</th></tr>
+                <tr><td class="key">메소포타미아</td><td>티그리스·유프라테스</td><td>쐐기 문자, 함무라비 법전("눈에는 눈, 이에는 이"), 60진법, 태음력, 지구라트(신전)</td></tr>
+                <tr><td class="key">이집트</td><td>나일 강</td><td>상형 문자, 파피루스, 태양력, 피라미드·스핑크스, 미라(영혼 불멸 사상)</td></tr>
+                <tr><td class="key">인더스</td><td>인더스 강</td><td>모헨조다로·하라파(계획 도시), 배수 시설·목욕 시설 발달, 인더스 문자(미해독)</td></tr>
+                <tr><td class="key">황허(황하)</td><td>황허 강</td><td>갑골 문자(점복 결과 기록), 청동기 문화, 은(상)나라 → 주나라(봉건제 실시)</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ⅱ 서아시아·지중해 세계 -->
+      <div class="scope-section">
+        <div class="scope-label">Ⅱ. 문명의 발생과 고대 세계의 형성 — 02. 고대 서아시아와 지중해 세계의 형성</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 아시리아와 서아시아의 통일</div>
+            <div class="unit-detail">
+              <strong>아시리아</strong>: 철제 무기와 전차를 활용한 강력한 군사력으로 서아시아 최초 통일(기원전 7세기경)<br>
+              → <strong>가혹한 통치</strong>(피지배 민족 강제 이주, 무거운 세금)로 정복지의 반발을 사 단명, 곧 분열<br>
+              <div class="tip-box" style="margin:10px 0">💡 아시리아 멸망 이후 서아시아는 여러 나라로 분열되었다가, 페르시아가 다시 통일함</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 아키메네스 왕조 페르시아</div>
+            <div class="unit-detail">
+              <span class="tag tag-orange">건국</span> <strong>키루스 2세</strong>가 아시리아 멸망 후 분열된 서아시아를 다시 통합하며 건국. 정복한 민족(예: 바빌론에 포로로 끌려간 유대인)을 풀어주는 등 관용적 정책의 기틀을 처음 마련한 인물<br>
+              <span class="tag tag-orange">전성기</span> <strong>다리우스 1세</strong> 때 서아시아 대부분을 아우르는 최대 영토 달성, 통치 제도 완성<br>
+              <span class="tag tag-orange">통치 방식</span> <strong>관용적 통치</strong>: 정복한 민족의 고유 종교·문화·풍습을 인정 (아시리아의 강압적 통치와 대조!)<br>
+              <span class="tag tag-orange">행정</span> 전국을 여러 주(사트라피)로 나눠 총독 파견, <strong>'왕의 길'</strong>(도로) 건설로 교통·통신 정비, 화폐·도량형 통일<br>
+              <span class="tag tag-orange">결과</span> 다리우스 1세 이후 그리스와의 전쟁(페르시아 전쟁)에서 패배 → 점차 쇠퇴 → 알렉산드로스에게 정복됨<br>
+              <div class="warn-box"><strong>⚠ 비교 포인트</strong> 아시리아(강압적, 단명) vs 아키메네스 왕조 페르시아(키루스 2세의 관용 정책으로 시작, 다리우스 1세 때 전성기, 장기간 안정) — 건국자와 전성기 군주, 통치 방식과 결과를 연결해서 묻는 문제 빈출!</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 조로아스터교</div>
+            <div class="unit-detail">
+              페르시아에서 등장한 종교. <strong>선과 악의 대립</strong> 사상이 핵심 — 선의 신(빛, 아후라 마즈다)과 악의 신(어둠)이 싸운다는 이원론적 세계관<br>
+              불을 신성하게 여겨 <strong>'배화교'</strong>(拜火敎, 불을 섬기는 종교)라고도 불림<br>
+              이후 크리스트교·이슬람교 등 다른 종교의 천국·지옥, 최후의 심판 사상에 영향을 줌
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 아테네의 민주 정치 (★최다 출제)</div>
+            <div class="unit-detail">
+              <strong>폴리스</strong>(도시국가) 중심의 그리스 — 아테네, 스파르타 등<br><br>
+              <span class="tag tag-orange">발전 과정</span> 평민의 정치 참여 요구 증가(전쟁에서 중요한 역할을 담당하면서) → 솔론의 개혁 → 클레이스테네스의 개혁(도편추방제 도입) → <strong>페리클레스 시대</strong>에 직접 민주 정치 완성<br>
+              <span class="tag tag-orange">직접 민주 정치란?</span> 시민이 직접 민회에 참여해 법과 정책을 결정하는 정치 형태<br>
+              <div class="warn-box"><strong>⚠ 한계점 — 시험 단골 포인트!</strong> 아테네 민주 정치는 모든 사람이 아니라 <strong>성인 남성 시민만</strong> 참여 가능 → 여성, 노예, 외국인(거류외인)은 정치 참여 제외! "직접 민주 정치=모두가 평등하게 참여"라고 착각하면 틀림.</div>
+              <span class="tag tag-orange">스파르타</span> 군국주의 체제, 강한 군사 훈련 중심 사회(소수의 시민이 다수의 노예를 통제하기 위함)<br>
+              <span class="tag tag-orange">페르시아 전쟁</span> 그리스 연합군이 마라톤 전투 등에서 페르시아를 격퇴<br>
+              <span class="tag tag-orange">펠로폰네소스 전쟁</span> 아테네 vs 스파르타 → 그리스 세계 전체 쇠퇴<br>
+              <span class="tag tag-orange">헬레니즘 문화</span> 알렉산드로스 대왕의 동방 원정 → 그리스 문화 + 오리엔트(동방) 문화가 융합되어 형성
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 고대 로마</div>
+            <div class="unit-detail">
+              <strong>발전 단계:</strong> 왕정 → 공화정 → 제정<br>
+              • <strong>공화정</strong>: 원로원 중심, 귀족(파트리키) vs 평민(플레브스) 갈등 → 리키니우스법·호르텐시우스법으로 평민 권리 점차 확대<br>
+              • <strong>카이사르 → 옥타비아누스</strong> 시대를 거쳐 제정 시작(옥타비아누스가 초대 황제 '아우구스투스'가 됨)<br>
+              • <strong>로마의 업적</strong>: 로마법(이후 유럽 법체계의 기초), 도로망("모든 길은 로마로 통한다"), 콜로세움, 판테온<br>
+              • <strong>크리스트교</strong>: 초기 박해받음 → 콘스탄티누스 황제가 공인 → 테오도시우스 황제가 국교로 지정
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ⅱ-2 동아시아 세계 -->
+      <div class="scope-section">
+        <div class="scope-label">Ⅱ. 문명의 발생과 고대 세계의 형성 — 03. 고대 동아시아와 인도 세계의 형성 (동아시아)</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 춘추 전국 시대의 배경 — 주나라 봉건제의 붕괴</div>
+            <div class="unit-detail">
+              주나라는 원래 <strong>봉건제</strong>(왕이 친족·공신에게 땅을 나눠주고 다스리게 하는 제도, 혈연관계를 바탕으로 한 충성 관계)로 넓은 영토를 통치했음<br>
+              <span class="tag tag-orange">붕괴 원인</span> 시간이 지나며 왕실과 제후 사이의 혈연관계가 멀어짐 → 제후들이 독자적인 세력을 키우며 왕실의 통제에서 벗어남<br>
+              <span class="tag tag-orange">결정적 사건</span> 기원전 770년경 주나라가 외부 민족의 침입으로 수도를 동쪽으로 옮김(이전을 기준으로 <strong>서주(西周)와 동주(東周)</strong>로 구분) → 이때부터 왕실의 권위가 크게 약화되고, 제후국들이 사실상 독립적으로 경쟁하는 시대로 접어듦
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 춘추 시대 vs 전국 시대 — 구분과 차이</div>
+            <div class="unit-detail">
+              동주 시대 전체를 보통 <strong>춘추 시대</strong>와 <strong>전국 시대</strong> 두 시기로 나눠서 부름<br><br>
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th></th><th>춘추 시대</th><th>전국 시대</th></tr>
+                <tr><td class="key">명분</td><td>주 왕실을 명목상 받들며(존왕) 패권을 다툼</td><td>주 왕실의 권위를 완전히 무시, 각국이 스스로 '왕'을 자처</td></tr>
+                <tr><td class="key">주요 세력</td><td>춘추 5패(제 환공, 진 문공 등 강한 제후들)</td><td>전국 7웅(진·초·연·제·한·위·조)</td></tr>
+                <tr><td class="key">전쟁 양상</td><td>상대적으로 제한적인 전쟁, 예법이 일부 작동</td><td>대규모 영토 병합 전쟁, 약소국이 차례로 멸망</td></tr>
+                <tr><td class="key">결말</td><td>여러 강대국이 공존</td><td>진(秦)나라가 최종 승리 → 중국 통일</td></tr>
+              </table>
+              <div class="tip-box" style="margin:10px 0 0">💡 "춘추 시대는 그래도 명분(주 왕실 존중)을 따졌지만, 전국 시대는 명분 없이 오직 힘으로 경쟁했다"는 차이를 한 문장으로 기억하면 헷갈리지 않음</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 철기 보급과 사회 변화 (★시험에 잘 나오는 인과관계)</div>
+            <div class="unit-detail">
+              춘추 전국 시대에 <strong>철제 농기구</strong>가 널리 보급되면서 사회 전반이 크게 바뀜<br><br>
+              <span class="tag tag-orange">농업</span> 철제 농기구·소를 이용한 농사(우경)로 농업 생산력이 크게 증가 → 식량 증가, 인구 증가<br>
+              <span class="tag tag-orange">상업</span> 잉여 생산물 증가 → 시장과 상업이 발달, 화폐(청동 화폐 등)가 널리 사용됨<br>
+              <span class="tag tag-orange">군사</span> 철제 무기 보급으로 전쟁의 규모와 살상력이 커짐 → 보병 중심의 대규모 군대 운용 가능해짐<br>
+              <span class="tag tag-orange">신분제 변화</span> 능력 있는 인재를 신분에 관계없이 등용하려는 분위기 형성(전통적 혈연 중심 질서가 흔들림) → 이러한 혼란과 변화 속에서 다양한 사상가들이 등장해 '어떻게 하면 사회를 안정시킬 수 있는가'를 고민 → 제자백가의 등장으로 이어짐
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 제자백가 — 혼란을 해결하려는 다양한 사상 (★최다 출제)</div>
+            <div class="unit-detail">
+              춘추 전국의 혼란을 극복하기 위해 다양한 사상가와 학파가 등장 — 이를 통틀어 <strong>제자백가</strong>(여러 사상가, 수많은 학파)라고 부름<br><br>
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>학파</th><th>대표 인물</th><th>핵심 주장</th></tr>
+                <tr><td class="key">유가</td><td>공자, 맹자</td><td><strong>인(仁, 어짊)과 예(禮)</strong>를 바탕으로 한 도덕 정치 강조. 군주가 덕으로 다스려야 백성이 따른다고 봄</td></tr>
+                <tr><td class="key">도가</td><td>노자, 장자</td><td><strong>무위자연</strong>(인위적으로 다스리지 않고 자연스러움에 따름) 강조. 인간이 만든 제도·욕심이 혼란의 원인이라고 봄</td></tr>
+                <tr><td class="key">법가</td><td>한비자, 상앙</td><td><strong>엄격한 법과 제도, 강력한 처벌</strong>로 통치해야 질서가 유지된다고 봄. 군주의 강력한 권한을 정당화</td></tr>
+                <tr><td class="key">묵가</td><td>묵자</td><td><strong>겸애(모든 사람을 차별 없이 사랑함)</strong>와 절약, 전쟁 반대(비공)를 주장</td></tr>
+                <tr><td class="key">병가</td><td>손자</td><td>전쟁에서 이기기 위한 전략·전술 연구(『손자병법』)</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ 사상과 통치 결과를 연결하는 문제가 빈출!</strong><br>
+              • 진나라는 <strong>법가</strong> 사상을 바탕으로 강력한 중앙 집권 체제를 만들어 중국 통일에 성공함<br>
+              • 한나라는 통일 이후에는 가혹한 법가 통치 대신 <strong>유가</strong>(유교)를 통치 이념으로 삼아 안정적으로 다스림<br>
+              → "혼란기에는 어떤 사상이 힘을 얻었는지, 통일 후에는 어떤 사상으로 바뀌었는지"를 묻는 흐름형 문제에 대비할 것</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 진나라 — 중국 최초의 통일</div>
+            <div class="unit-detail">
+              <strong>진시황제</strong>가 춘추 전국의 혼란을 끝내고 중국 최초로 통일(기원전 221년)<br>
+              <span class="tag tag-orange">통치 정책</span> 법가 사상 기반의 <strong>강력한 중앙 집권 체제</strong>, 문자·도량형·화폐 통일, 군현제 실시(전국에 관리 직접 파견)<br>
+              <span class="tag tag-orange">대표 건축</span> 만리장성 축조(북방 민족 침입 방어), 병마용 — 황제 무덤을 지키는 거대한 병사 모형군<br>
+              <span class="tag tag-orange">멸망</span> 가혹한 통치와 대규모 토목 공사로 백성의 불만 폭증 → 진시황제 사후 빠르게 멸망(통일 후 약 15년)
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 한나라 — 동아시아 문화의 기틀</div>
+            <div class="unit-detail">
+              진나라 멸망 후 <strong>유방</strong>이 건국. 진의 급격한 정책을 완화하며 안정적으로 발전<br>
+              <span class="tag tag-orange">한 무제 시기 전성기</span> 군현제 강화, <strong>유교</strong>를 통치 이념으로 채택(이후 동아시아 전체에 큰 영향), 비단길을 통한 동서 교역 활발<br>
+              <span class="tag tag-orange">외부 압박</span> 북방 유목 민족 흉노와 계속 대립
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 후한 — 한나라의 부흥과 쇠퇴</div>
+            <div class="unit-detail">
+              왕망의 신나라로 잠시 한이 멸망했다가, <strong>광무제</strong>가 다시 세운 한 왕조(=후한)<br>
+              후반기에는 외척과 환관(궁중 내시)의 권력 다툼, 농민 봉기(황건적의 난 등)로 점차 혼란 → 결국 멸망 → 이후 <strong>위·진·남북조</strong>의 분열기로 이어짐
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 위진 남북조 시대 — 분열과 민족 융합</div>
+            <div class="unit-detail">
+              후한 멸망 후 중국이 위·촉·오(삼국)로 분열되었다가, 이후 화북(북방)과 강남(남방)으로 나뉘어 여러 왕조가 교체된 장기 분열기<br>
+              <span class="tag tag-orange">특징</span> 북방 유목 민족이 화북 지역에 여러 나라를 세움(북조), 한족은 강남으로 이동해 왕조를 이어감(남조) → 한족과 북방 민족의 문화가 섞이는 <strong>민족 융합</strong>이 진행됨<br>
+              <span class="tag tag-orange">문화</span> 이 시기 인도에서 전해진 <strong>불교</strong>가 크게 융성(원강·룽먼 석굴 등 불교 예술 발달)
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 수나라 — 짧지만 중요한 재통일</div>
+            <div class="unit-detail">
+              위진 남북조의 오랜 분열을 끝내고 중국을 다시 통일(6세기 말)<br>
+              <span class="tag tag-orange">업적</span> <strong>대운하</strong> 건설 — 강남(경제 중심)과 화북(정치 중심)을 연결해 물자 운송을 원활하게 함<br>
+              <span class="tag tag-orange">멸망 원인</span> 대운하 등 대규모 토목 공사 + <strong>고구려 원정 실패</strong>(살수 대첩 등)로 국력 소모 → 백성 반란으로 단명(진나라와 유사한 패턴!)
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 당나라 — 동아시아 문화권의 완성</div>
+            <div class="unit-detail">
+              수나라를 이어 건국, 약 300년간 지속되며 동아시아 최대의 국제적 제국으로 발전<br>
+              <span class="tag tag-orange">제도</span> 율령(법전) 체제 정비 → 주변국(신라, 일본 등)이 이를 받아들여 각자의 제도를 정비함<br>
+              <span class="tag tag-orange">국제 도시 장안</span> 비단길의 중심지로 다양한 외국 상인·종교(이슬람교, 조로아스터교 등)가 공존하는 국제적인 수도였음<br>
+              <span class="tag tag-orange">동아시아 문화권</span> 한자, 율령, 유교, 불교를 공유하는 문화권이 당을 중심으로 완성됨 → 한국·일본·베트남 등에 큰 영향<br>
+              <span class="tag tag-orange">쇠퇴</span> 안·사의 난 이후 지방 세력(절도사) 강화 → 점차 쇠퇴
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 한국의 고대 국가 형성</div>
+            <div class="unit-detail">
+              동아시아 문화권의 일원으로서 한반도에서도 고대 국가가 성립·발전<br>
+              <span class="tag tag-orange">고구려·백제·신라</span> 각각 왕권 강화 및 율령 정비, 불교 수용을 거치며 고대 국가 체제를 완성(삼국 시대)<br>
+              <span class="tag tag-orange">통일과 발전</span> 신라가 당과 연합해 삼국을 통일 → 이후 발해가 고구려를 계승해 만주·한반도 북부에서 성장 → 신라와 발해가 공존(남북국)<br>
+              <span class="tag tag-orange">동아시아 문화권과의 관계</span> 당의 율령·유교·불교·한자를 받아들여 독자적으로 발전시킴 — 중국 문화의 단순 수용이 아니라 자기 방식대로 재구성한 점이 핵심 포인트
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 일본의 고대 국가</div>
+            <div class="unit-detail">
+              동아시아 문화권의 영향을 받아 일본에서도 고대 국가가 형성됨<br>
+              <span class="tag tag-orange">다이카 개신</span> 당의 율령 제도를 본떠 중앙 집권 체제를 정비하려 한 개혁<br>
+              <span class="tag tag-orange">불교 수용</span> 한반도(백제 등)를 통해 불교·한자 등 대륙 문화가 전해짐 — 아스카 문화 발달의 토대<br>
+              <span class="tag tag-orange">나라 시대</span> 당의 장안성을 본떠 헤이조쿄(나라)를 수도로 건설, 본격적인 율령 국가 체제 확립
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ⅱ-3 인도와 남아시아 -->
+      <div class="scope-section">
+        <div class="scope-label">Ⅱ. 문명의 발생과 고대 세계의 형성 — 03. 고대 동아시아와 인도 세계의 형성 (인도)</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 사산 왕조 페르시아</div>
+            <div class="unit-detail">
+              아키메네스 왕조 이후 다시 페르시아 지역을 통일한 왕조<br>
+              <span class="tag tag-orange">위치와 역할</span> 동서 교역로(비단길)의 중심에 위치해 동서 문화 교류의 통로 역할 → 비잔티움 제국과는 오랜 경쟁 관계<br>
+              <span class="tag tag-orange">종교·문화</span> 조로아스터교를 국교로 삼아 발전시킴, 페르시아 고유 문화를 유지하며 동서 문화 융합에 기여
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 마우리아 왕조 — 인도 최초의 통일 제국</div>
+            <div class="unit-detail">
+              인도 지역을 최초로 통일한 왕조<br>
+              <span class="tag tag-orange">아소카왕 시기 전성기</span> 정복 전쟁의 참혹함을 반성하고 <strong>불교에 귀의</strong> → 불교를 통한 통치 이념 확립, 각지에 불교 사원·돌기둥(석주) 건립, 불교를 인도 밖(스리랑카 등)으로 전파
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 쿠샨 왕조 — 간다라 미술</div>
+            <div class="unit-detail">
+              마우리아 왕조 이후 인도 북부에서 성장, 동서 교역(비단길)으로 번영<br>
+              <span class="tag tag-orange">불교의 변화</span> 부처를 신앙의 대상으로 삼는 <strong>대승 불교</strong>가 발전 → 동아시아(중국·한국·일본)로 전파되는 불교는 이 계통<br>
+              <span class="tag tag-orange">간다라 미술</span> 그리스(헬레니즘) 조각 양식 + 인도 불교가 결합 → 사람 모습을 한 불상이 처음으로 만들어짐 (이전에는 부처의 모습을 직접 형상화하지 않았음)
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 굽타 왕조 — 힌두 문화의 완성</div>
+            <div class="unit-detail">
+              쿠샨 왕조 이후 인도를 다시 통일, 인도 고전 문화의 황금기를 이룸<br>
+              <span class="tag tag-orange">힌두교의 발전</span> 브라만교를 바탕으로 민간 신앙과 불교 요소가 결합되어 <strong>힌두교</strong>가 체계화되고 인도 사회 전반에 정착<br>
+              <span class="tag tag-orange">문화 성과</span> 산스크리트 문학(『마하바라타』 등), 숫자 '0'의 개념과 10진법 체계 정립 → 이후 이슬람을 거쳐 유럽에 전파(아라비아 숫자의 기원)
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 힌두교 — 인도 사회와 결합한 종교</div>
+            <div class="unit-detail">
+              다신교적 성격(브라흐마·비슈누·시바 등 여러 신을 섬김), 카르마(업)와 환생 사상이 핵심<br>
+              <strong>카스트 제도</strong>와 깊게 결합되어 인도 사회 신분 질서를 정당화하는 역할도 함 → 카스트(브라만-크샤트리아-바이샤-수드라)와 힌두교의 관계를 묻는 문제 자주 출제됨
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ⅲ 유럽과 이슬람 -->
+      <div class="scope-section">
+        <div class="scope-label">Ⅲ. 세계 종교의 확산과 지역 문화의 발전 — 02·03. 크리스트교·이슬람교의 확산 / 서아시아와 유럽의 교류와 갈등</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 비잔티움 제국</div>
+            <div class="unit-detail">
+              로마 제국이 동서로 분열된 후, 동로마(콘스탄티노폴리스 수도) 제국이 약 1000년간 존속하며 그리스·로마 문화를 계승<br>
+              <span class="tag tag-orange">유스티니아누스 황제</span> 옛 로마 영토 일부 회복, 『유스티니아누스 법전』 편찬(로마법 집대성)<br>
+              <span class="tag tag-orange">문화</span> 그리스 정교(크리스트교의 한 갈래) 발달, 화려한 모자이크·돔 건축(성 소피아 대성당)<br>
+              <span class="tag tag-orange">역할</span> 서유럽과 이슬람 세계 사이에서 그리스·로마 고전 문화를 보존·중계하는 역할 → 이후 서유럽 문화 부흥(르네상스)에 영향
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 프랑크 왕국 — 서유럽 중세의 시작</div>
+            <div class="unit-detail">
+              서로마 제국 멸망 후 서유럽에서 성장한 게르만 왕국 중 가장 크게 성공<br>
+              <span class="tag tag-orange">크리스트교 수용</span> 로마 가톨릭으로 개종 → 로마 교회와 협력 관계 구축(다른 게르만족과 다른 길)<br>
+              <span class="tag tag-orange">카롤루스 대제</span> 서유럽 대부분 통합, 로마 교황으로부터 서로마 황제 대관 → 이후 왕국이 분열되며 오늘날 프랑스·독일·이탈리아의 기원이 됨
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 중세 유럽의 봉건제와 교회</div>
+            <div class="unit-detail">
+              • <strong>봉건제</strong>: 왕 → 영주 → 기사 → 농노로 이어지는 계층 구조, 주군-봉신 사이의 쌍방적 계약 관계(충성 서약 + 보호 의무)<br>
+              • <strong>로마 가톨릭 교회</strong>의 강력한 영향력 — 한때 교황권이 황제권보다 우위에 섬<br>
+              • <strong>카노사의 굴욕</strong>(1077): 황제 하인리히 4세가 교황에게 무릎 꿇고 사죄 → 교황권이 최고조에 이른 사건<br>
+              • <strong>십자군 전쟁</strong>: 성지 예루살렘 탈환을 명분으로 시작, 약 200년간 7차례 전개 → 결국 실패 → 교황권 약화, 왕권 강화, 동서 교류 활발(이슬람·비잔티움 문화 유입)
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 이슬람 세계의 형성과 발전</div>
+            <div class="unit-detail">
+              • <strong>무함마드</strong>(마호메트): 7세기 아라비아 반도에서 이슬람교 창시(유일신 알라, 경전 코란)<br>
+              • 짧은 기간에 아라비아 반도 → 중동·북아프리카·중앙아시아까지 급속 팽창<br>
+              • <strong>이슬람 문화</strong>: 아라비아 숫자(인도 숫자 체계 수용·전파), 대수학(알제브라), 연금술, 의학 발전 — 그리스·로마, 인도, 페르시아 문화를 폭넓게 수용해 독자적으로 발전시킨 점이 특징<br>
+              • 동서 무역의 중계 역할 수행(비단길, 바닷길 모두 장악)
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 유럽에서 르네상스가 일어나다</div>
+            <div class="unit-detail">
+              14~16세기 이탈리아에서 시작되어 유럽 전역으로 확산된 문화·예술 부흥 운동. "다시 태어남"이라는 뜻으로, 고대 그리스·로마의 인간 중심적 문화를 다시 본받고자 함<br><br>
+              <span class="tag tag-orange">배경</span> 지중해 무역으로 부를 쌓은 이탈리아 도시(피렌체, 베네치아 등)의 상공업 발달, 십자군 전쟁과 비잔티움 제국 멸망 이후 그리스·로마 고전 문헌과 학자들이 이탈리아로 유입<br>
+              <span class="tag tag-orange">핵심 정신</span> <strong>인간 중심적 사고(인문주의)</strong> — 중세의 신 중심 세계관에서 벗어나 인간의 개성과 능력을 중시<br>
+              <span class="tag tag-orange">대표 인물·작품</span> 레오나르도 다빈치(모나리자), 미켈란젤로(다비드상, 시스티나 성당 천장화), 라파엘로<br>
+              <span class="tag tag-orange">확산</span> 이후 알프스 북쪽(독일, 네덜란드, 영국 등)으로 르네상스가 확산되며 유럽 전역의 문화에 큰 영향을 줌<br>
+              <div class="tip-box" style="margin:10px 0 0">💡 르네상스의 인간 중심적 사고는 이후 교회의 권위에 대한 비판적 시각으로 이어지며, 유럽 사회 전반의 변화에 영향을 줌</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ⅲ-2 북방 민족과 송·원 -->
+      <div class="scope-section">
+        <div class="scope-label">Ⅳ. 지역 세계의 교류와 변화 — 01. 유라시아 교역 및 문화 교류의 확대</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 송나라 — 문치주의와 경제 발전</div>
+            <div class="unit-detail">
+              당 멸망 후 5대 10국의 혼란을 수습하며 건국<br>
+              <span class="tag tag-orange">문치주의</span> 무인보다 문인(과거 시험으로 선발된 관료)을 우대하는 정책 → 군사력은 상대적으로 약화됨<br>
+              <span class="tag tag-orange">경제·문화 발전</span> 강남 지역 농업 생산력 증가, 상업·도시 발달(지폐 사용 시작), 성리학 등장(주희가 체계화)<br>
+              <span class="tag tag-orange">대외 관계의 약점</span> 군사적으로 약해 북방 민족(거란, 서하, 여진)에게 막대한 비단·은을 주며 평화를 유지하는 경우가 많았음 — 문치주의의 명암을 함께 기억할 것!
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 거란(요) — 송을 압박한 북방 민족</div>
+            <div class="unit-detail">
+              유목 민족인 거란족이 세운 나라(요)<br>
+              송과 군사적으로 대립하다가 화의를 맺어 송으로부터 매년 막대한 물품(비단·은)을 받기로 함 → 이후 동아시아 북방 민족들이 송을 압박해 경제적 이익을 얻는 패턴의 시초
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 서하 — 송·거란 사이의 또 다른 압박</div>
+            <div class="unit-detail">
+              탕구트족이 중국 서북부에 세운 나라<br>
+              독자적인 문자(서하 문자)를 만들어 사용했으며, 송에 압박을 가해 거란과 비슷하게 물품을 받아내는 등 송을 둘러싼 다중 압박 구도를 형성함(거란·서하·송의 삼각 관계)
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 여진(금) — 송을 더 강하게 압박</div>
+            <div class="unit-detail">
+              만주 지역의 여진족이 거란(요)을 멸망시키고 세운 나라(금)<br>
+              이후 송을 더욱 강하게 압박해 <strong>화북 지역을 차지</strong> → 송은 강남으로 밀려나 남송으로 이어짐(송 왕조의 영토가 절반으로 축소되는 결과)<br>
+              <div class="warn-box"><strong>⚠ 북방 민족 순서 기억법</strong> 거란(요) → 서하 → 여진(금) → (이후) 몽골 순으로 등장하며, 뒤로 갈수록 송에 대한 압박이 점점 강해진다는 흐름을 기억!</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 몽골 제국과 유라시아 교류</div>
+            <div class="unit-detail">
+              • <strong>칭기즈 칸</strong>: 13세기 몽골 초원의 부족들을 통일 → 거대한 정복 전쟁 시작<br>
+              • 짧은 시간에 유라시아 대부분을 지배하는 사상 최대 규모의 제국 건설<br>
+              • <strong>팍스 몽골리카</strong>(몽골에 의한 평화): 광대한 영토를 하나로 묶어 동서 교역과 문화 교류가 전례 없이 활발해진 시기 — 비단길이 안전하게 정비되어 상인·여행가의 왕래가 폭증<br>
+              • <strong>원나라</strong>(쿠빌라이 칸이 건국): 남송을 멸망시키고 중국 전체 지배 / 마르코 폴로가 방문해 『동방견문록』을 남김<br>
+              • 부정적 영향: 흑사병(페스트)이 활발해진 교류망(실크로드)을 따라 유럽까지 전파되어 인구가 크게 감소함<br>
+              <span class="tag tag-orange">유라시아 교류의 의미</span> 몽골 제국 시기를 거치며 동서양이 하나의 교역망으로 연결되는 경험을 함 — 이후 세계화의 초기 형태로 평가됨
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ⅳ 동아시아 질서의 변화 -->
+      <div class="scope-section">
+        <div class="scope-label">Ⅳ. 지역 세계의 교류와 변화 — 02. 동아시아와 인도 지역 질서의 변화</div>
+        <div class="unit-list">
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 명·청 교체와 동아시아</div>
+            <div class="unit-detail">
+              • <strong>명나라</strong>(주원장 건국): 몽골(원)을 북으로 몰아내고 한족 왕조 부활 / 정화의 대원정(인도양·아프리카까지 진출하는 대규모 해상 탐험) / 만리장성 대대적 보수<br>
+              • <strong>청나라</strong>(여진족이 세운 후금 → 청으로 발전, 이후 만주족): 명 멸망 후 중국 전체를 지배 / 한족에게는 변발·호복(만주족 복식)을 강요하면서도 한족의 제도와 문화를 적극 수용하는 이중 정책<br>
+              → 강희제·옹정제·건륭제 시기에 최고 전성기를 맞음(영토 최대 확장, 안정적 통치)
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 무굴 제국 — 인도의 이슬람 왕조</div>
+            <div class="unit-detail">
+              16세기 초 <strong>바부르</strong>가 북인도에 세운 이슬람 왕조. 굽타 왕조 이후 오랫동안 여러 나라로 나뉘어 있던 인도를 다시 통합한 대제국<br><br>
+              <span class="tag tag-orange">아크바르 황제</span> 전성기를 이끈 황제. <strong>종교 관용 정책</strong> 실시 — 힌두교도에게 부과되던 인두세(지즈야)를 폐지하고, 힌두교도를 관료로 등용하는 등 이슬람과 힌두 세력의 공존을 추구함<br>
+              <span class="tag tag-orange">인도·이슬람 문화</span> 이슬람 문화와 인도(힌두) 문화가 융합된 독특한 문화 발달 — <strong>타지마할</strong>(샤 자한이 왕비를 추모하며 건립, 이슬람 건축 양식 + 인도 양식의 결합)이 대표적<br>
+              <span class="tag tag-orange">쇠퇴</span> <strong>아우랑제브 황제</strong> 시기에 다시 이슬람 중심 정책으로 돌아서며 힌두교를 억압(지즈야 부활) → 힌두 세력의 반발로 제국이 분열·쇠퇴<br>
+              <div class="warn-box"><strong>⚠ 시험 빈출 비교</strong> 아크바르(관용 정책 → 안정)와 아우랑제브(억압 정책 → 쇠퇴)를 대조해서 묻는 문제가 많음 — 아키메네스 왕조 페르시아(키루스 2세·다리우스 1세의 관용 정책)와 같은 '관용 통치가 안정을 가져온다'는 패턴으로 함께 기억하면 좋음</div>
+              <div class="tip-box" style="margin:10px 0 0">💡 이후 무굴 제국이 쇠퇴하면서 유럽 세력(영국 동인도 회사 등)이 인도에 본격적으로 진출하는 계기가 됨</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 가마쿠라 막부 — 일본 최초의 무사 정권</div>
+            <div class="unit-detail">
+              미나모토 요리토모가 수립한 일본 최초의 막부(무사 정권)<br>
+              <span class="tag tag-orange">통치 구조</span> 천황은 명목상 존재만 유지, 실질적인 권력은 쇼군(막부의 우두머리)이 행사하는 <strong>이중 권력 구조</strong> 시작 — 이후 일본 역사에서 막부 체제가 약 700년간 지속되는 출발점<br>
+              <span class="tag tag-orange">대외 관계</span> 몽골(원)의 두 차례 침입을 받았으나 태풍(가미카제) 등의 도움으로 격퇴
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 무로마치 막부</div>
+            <div class="unit-detail">
+              가마쿠라 막부 멸망 후 아시카가 가문이 수립한 막부<br>
+              <span class="tag tag-orange">대외 교류</span> 명나라와 조공·무역 관계를 맺어 활발히 교역(왜구 단속의 대가로 무역 허가를 받음)<br>
+              <span class="tag tag-orange">쇠퇴</span> 점차 쇼군의 권력이 약화되고 지방 영주(다이묘)들의 세력이 강해지면서 중앙 통제력을 잃어감 → 이후 일본 전국 시대로 이어짐
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 일본 전국 시대 — 군웅할거의 시대</div>
+            <div class="unit-detail">
+              무로마치 막부의 권위가 무너지면서 각지의 <strong>다이묘(지방 영주)들이 독자적으로 세력을 다투던 약 100여 년간의 분열·전쟁 시기</strong><br>
+              <span class="tag tag-orange">통일 과정</span> 오다 노부나가가 통일의 기반을 마련 → 도요토미 히데요시가 일본을 통일 → 이후 도쿠가와 이에야스가 에도 막부를 세우며 전국 시대를 완전히 종식<br>
+              <div class="tip-box" style="margin:10px 0">💡 도요토미 히데요시의 일본 통일 이후 조선을 침략한 것이 임진왜란(1592)이라는 점도 흐름상 함께 기억해두면 좋음</div>
+            </div>
+          </div>
+
+          <div class="unit-item border-history">
+            <div class="unit-title">🟠 에도 막부 — 일본의 새로운 통일 정권</div>
+            <div class="unit-detail">
+              <strong>도쿠가와 이에야스</strong>가 전국 시대를 끝내고 에도(현재의 도쿄)에 수립한 막부. 약 260여 년간 안정적으로 지속됨<br><br>
+              <span class="tag tag-orange">통치 방식</span> <strong>산킨코타이</strong>(참근교대) 제도 — 각 지역의 다이묘(영주)가 일정 기간마다 에도에 머물게 하여 충성을 확인하고 지방 세력이 커지는 것을 견제함<br>
+              <span class="tag tag-orange">대외 정책</span> <strong>쇄국 정책</strong> 실시 — 크리스트교 확산을 막기 위해 외국과의 교류를 제한, 나가사키 한 항구에서만 제한적으로 네덜란드·중국과 교역 허용<br>
+              <span class="tag tag-orange">사회·문화</span> 약 260년간의 평화(에도 시대)를 바탕으로 상업이 발달하고, 상인·서민 계층(조닌)을 중심으로 가부키·우키요에 같은 독자적인 문화가 발달함<br>
+              <div class="tip-box" style="margin:10px 0 0">💡 가마쿠라 막부(천황과 쇼군의 이중 권력 시작) → 무로마치 막부(쇼군 권력 약화 → 전국 시대) → 전국 시대(군웅할거) → 에도 막부(재통일·장기 안정)로 이어지는 일본 막부의 전체 흐름을 순서대로 기억!</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tip-box" style="margin-bottom:20px">
+        📚 <strong>Ⅱ. 문명의 발생과 고대 세계의 형성 ~ Ⅳ-02. 동아시아와 인도지역 질서의 변화</strong> — 학교 시험 범위 안내문 그대로 정리 (Ⅳ-03 오스만 제국·신항로 개척은 시험 범위 아님). 학습지 5~34쪽(6번까지) 꼭 같이 확인!
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       🌐 영어
+  ══════════════════════════════════════ -->
+  <div class="subject-card" data-subject="english">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-header-left">
+        <div class="subject-icon color-english">🌐</div>
+        <div class="card-meta">
+          <div class="subject-name text-english">영어</div>
+          <div class="subject-publisher">천재 (소영순) · 7/2 3교시 11:30</div>
+        </div>
+      </div>
+      <div class="card-right">
+        <span class="unit-count">1~4과</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <!-- Lesson 1 -->
+      <div class="scope-section">
+        <div class="scope-label">Lesson 1 — New Year, New Me</div>
+        <div class="unit-list">
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 핵심 문법 ①: 접속사 if (조건절) — ★최다 출제</div>
+            <div class="unit-detail">
+              <strong>의미</strong>: "만약 ~한다면" — 조건을 나타내는 부사절 접속사<br>
+              <strong>형태</strong>: <code>If + 주어 + 동사(현재형), 주어 + will/can/may + 동사원형 ~</code><br><br>
+              <div class="formula-box">
+                <strong>교과서 본문 예문</strong>: If you use your smartphone late at night, your brain will stay active.<br>
+                (만약 밤늦게 스마트폰을 사용한다면, 너의 뇌는 계속 활성화될 것이다.)
+              </div>
+              <table class="concept-table" style="margin-top:8px">
+                <tr><th>구분</th><th>규칙</th><th>예</th></tr>
+                <tr><td class="key">if절의 시제</td><td>미래 의미여도 <strong>현재시제</strong>로 씀 (will을 if절에 쓰지 않음!)</td><td>If it rains tomorrow, we will stay home. (rains, 아닌 will rain ✗)</td></tr>
+                <tr><td class="key">주절의 위치</td><td>if절이 앞에 오면 콤마(,)로 구분 / if절이 뒤에 오면 콤마 없음</td><td>We will stay home if it rains tomorrow.</td></tr>
+                <tr><td class="key">부정형</td><td>If + 주어 + don't/doesn't + 동사원형</td><td>If you don't hurry, you will miss the bus.</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ 가장 많이 틀리는 포인트!</strong> if가 "조건"(만약 ~라면)을 나타낼 때는 절대 if절에 will을 쓰지 않음. "If it <strong>will rain</strong>" (✗) → "If it <strong>rains</strong>" (✓)<br>
+              단, if가 "~인지 아닌지"라는 명사절(목적어 역할)로 쓰일 때는 이 규칙이 적용되지 않음 — 예: I don't know if it will rain tomorrow. (이건 조건이 아니라 '비가 올지 안 올지'라는 의미라서 will 가능)</div>
+            </div>
+          </div>
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 핵심 문법 ②: 의문사 + to부정사</div>
+            <div class="unit-detail">
+              <strong>의미</strong>: "무엇을/언제/어디서/어떻게 ~할지" — 의문사와 to부정사가 결합해 하나의 명사 역할(목적어 등)을 함<br>
+              <strong>형태</strong>: <code>what/when/where/how/which + to + 동사원형</code><br><br>
+              <div class="formula-box">
+                <strong>교과서 본문 예문</strong>: Let's find out what to do.<br>
+                (우리가 무엇을 해야 할지 알아보자.)
+              </div>
+              <table class="concept-table" style="margin-top:8px">
+                <tr><th>형태</th><th>의미</th><th>예</th></tr>
+                <tr><td class="key">what to + 동사원형</td><td>무엇을 ~할지</td><td>I don't know what to wear.</td></tr>
+                <tr><td class="key">when to + 동사원형</td><td>언제 ~할지</td><td>Tell me when to start.</td></tr>
+                <tr><td class="key">where to + 동사원형</td><td>어디서 ~할지</td><td>We need to decide where to go.</td></tr>
+                <tr><td class="key">how to + 동사원형</td><td>어떻게 ~할지, ~하는 방법</td><td>She learned how to swim.</td></tr>
+                <tr><td class="key">which to + 동사원형</td><td>어느 것을 ~할지</td><td>I can't choose which to buy.</td></tr>
+              </table>
+              <div class="tip-box" style="margin:10px 0 0">💡 "의문사+to부정사"는 "의문사+주어+should+동사원형"으로 바꿔 쓸 수 있음! 예: what to do = what I should do — 바꿔쓰기 문제로 자주 나옴</div>
+            </div>
+          </div>
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 핵심 표현 (의사소통 기능)</div>
+            <div class="unit-detail">
+              <span class="tag tag-blue">의도 표현하기</span><br>
+              A: Do you have any special goals for this year?<br>
+              B: Yes, I'm planning to exercise more.<br><br>
+              <span class="tag tag-blue">격려하기</span><br>
+              A: I want to perform at the school festival.<br>
+              B: Sounds great. You can do it!<br><br>
+              <div class="tip-box" style="margin:10px 0 0">💡 "I'm planning to ~"(~할 계획이다), "Sounds great."(좋은데!), "You can do it!"(할 수 있어!) 같은 표현은 대화문 빈칸·순서배열 문제로 자주 출제됨</div>
+            </div>
+          </div>
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 주요 단어</div>
+            <div class="unit-detail">
+              <div class="word-grid">
+                <div class="word-card"><div class="word-en">resolution</div><div class="word-ko">결심, 결의</div></div>
+                <div class="word-card"><div class="word-en">achieve</div><div class="word-ko">달성하다, 이루다</div></div>
+                <div class="word-card"><div class="word-en">improve</div><div class="word-ko">향상시키다</div></div>
+                <div class="word-card"><div class="word-en">challenge</div><div class="word-ko">도전; 도전하다</div></div>
+                <div class="word-card"><div class="word-en">effort</div><div class="word-ko">노력</div></div>
+                <div class="word-card"><div class="word-en">habit</div><div class="word-ko">습관</div></div>
+                <div class="word-card"><div class="word-en">active</div><div class="word-ko">활동적인, 활성화된</div></div>
+                <div class="word-card"><div class="word-en">brain</div><div class="word-ko">뇌, 두뇌</div></div>
+                <div class="word-card"><div class="word-en">stay up</div><div class="word-ko">늦게까지 안 자다</div></div>
+                <div class="word-card"><div class="word-en">goal</div><div class="word-ko">목표</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lesson 2 -->
+      <div class="scope-section">
+        <div class="scope-label">Lesson 2 — The Journey with My Family</div>
+        <div class="unit-list">
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 핵심 문법 ①: to부정사의 형용사적 용법</div>
+            <div class="unit-detail">
+              <strong>의미</strong>: "~할, ~하는" — to부정사가 형용사처럼 (대)명사를 뒤에서 꾸며줌<br>
+              <strong>형태</strong>: <code>명사 + to + 동사원형</code> (항상 명사를 <strong>뒤에서</strong> 꾸밈!)<br><br>
+              <div class="formula-box">
+                <strong>교과서 본문 예문</strong>: It's time to build a tower.<br>
+                (탑을 쌓을 시간이다.) → to build가 앞의 time을 꾸며줌("쌓을 시간")
+              </div>
+              <table class="concept-table" style="margin-top:8px">
+                <tr><th>예문</th><th>해석</th></tr>
+                <tr><td class="key">I have a lot of homework to do.</td><td>해야 할 숙제가 많다</td></tr>
+                <tr><td class="key">She needs something to drink.</td><td>마실 어떤 것이 필요하다</td></tr>
+                <tr><td class="key">This is a good chance to learn.</td><td>배울 좋은 기회</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ 전치사가 필요한 경우 주의!</strong> 꾸밈을 받는 명사가 원래 동사 뒤에 전치사가 필요한 동사라면, to부정사 뒤에도 그 전치사를 반드시 써야 함!<br>
+              • I need a chair to sit <strong>on</strong>. (sit on a chair이므로 on 필요, "I need a chair to sit." ✗)<br>
+              • She needs a pen to write <strong>with</strong>. (write with a pen)<br>
+              • He wants a friend to talk <strong>to</strong>. (talk to a friend)</div>
+            </div>
+          </div>
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 핵심 문법 ②: 주격 관계대명사</div>
+            <div class="unit-detail">
+              <strong>의미</strong>: 두 문장을 한 문장으로 연결, 관계대명사가 앞 문장의 <strong>주어</strong> 역할을 대신함<br>
+              <strong>형태</strong>: <code>선행사(명사) + who/which/that + 동사 ~</code><br><br>
+              <div class="formula-box">
+                <strong>교과서 본문 예문</strong>: He is in a hospital which is far from here.<br>
+                (그는 여기서 먼 병원에 있다.) → which가 앞의 hospital(사물)을 받아 주어 역할
+              </div>
+              <table class="concept-table" style="margin-top:8px">
+                <tr><th>선행사</th><th>주격 관계대명사</th><th>예</th></tr>
+                <tr><td class="key">사람</td><td><strong>who</strong> (= that)</td><td>I know the boy who lives next door.</td></tr>
+                <tr><td class="key">사물·동물</td><td><strong>which</strong> (= that)</td><td>This is the book which made me cry.</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ 주격 관계대명사 뒤 동사의 수일치!</strong> 관계대명사 뒤 동사는 꾸밈을 받는 명사(선행사)의 인칭·수에 맞춰야 함 — 관계대명사절 안의 동사가 아니라 <strong>선행사</strong>를 기준으로 맞추는 것이 핵심!<br>
+              예: The students who <strong>study</strong> hard pass the exam. (선행사 students가 복수 → study, studies ✗)<br>
+              예: The hospital which <strong>is</strong> far from here is new. (선행사 hospital이 단수 → is)</div>
+              <div class="tip-box" style="margin:10px 0 0">💡 who와 which는 that으로 바꿔 쓸 수 있음 (사람·사물 모두 가능) — 바꿔쓰기 문제 단골!</div>
+            </div>
+          </div>
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 핵심 표현 (의사소통 기능)</div>
+            <div class="unit-detail">
+              <span class="tag tag-blue">허가 요청하기</span><br>
+              A: Is it okay if I go to see a baseball game?<br>
+              B: I'm afraid you can't.<br><br>
+              <span class="tag tag-blue">시간 말하기</span><br>
+              A: What time is it in London?<br>
+              B: It's a quarter past six.<br><br>
+              <div class="tip-box" style="margin:10px 0 0">💡 "Is it okay if ~?"(~해도 될까요?), "I'm afraid you can't."(안 될 것 같아요 — 부드러운 거절), "a quarter past six"(6시 15분) 같은 시간 표현은 듣기·말하기 영역에서 자주 출제됨</div>
+            </div>
+          </div>
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 주요 단어</div>
+            <div class="unit-detail">
+              <div class="word-grid">
+                <div class="word-card"><div class="word-en">journey</div><div class="word-ko">여행, 여정</div></div>
+                <div class="word-card"><div class="word-en">experience</div><div class="word-ko">경험(하다)</div></div>
+                <div class="word-card"><div class="word-en">memorable</div><div class="word-ko">기억할 만한</div></div>
+                <div class="word-card"><div class="word-en">traditional</div><div class="word-ko">전통적인</div></div>
+                <div class="word-card"><div class="word-en">breathtaking</div><div class="word-ko">숨막히는, 경이로운</div></div>
+                <div class="word-card"><div class="word-en">destination</div><div class="word-ko">목적지</div></div>
+                <div class="word-card"><div class="word-en">tower</div><div class="word-ko">탑, 타워</div></div>
+                <div class="word-card"><div class="word-en">far from</div><div class="word-ko">~에서 먼</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lesson 3 -->
+      <div class="scope-section">
+        <div class="scope-label">Lesson 3 — New Ideas Bring Big Changes</div>
+        <div class="unit-list">
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 핵심 문법 ①: 수동태 — ★최다 출제</div>
+            <div class="unit-detail">
+              <strong>형태</strong>: <code>be동사 + 과거분사(p.p.) [+ by 행위자]</code><br>
+              <strong>의미</strong>: 주어가 ~당하다, ~되다 (행위의 대상이 주어가 됨)<br><br>
+              <div class="formula-box">
+                <strong>교과서 본문 예문</strong>: The dirty spot was cleaned by the lamp oil.<br>
+                (그 더러운 자국은 램프 기름에 의해 깨끗해졌다.)<br><br>
+                능동 → 수동 전환 순서:<br>
+                ① 능동태의 목적어 → 수동태의 주어<br>
+                ② 동사 → be동사(주어·시제에 맞춤) + p.p.<br>
+                ③ 능동태의 주어 → by + 목적격 (행위자)
+              </div>
+              <table class="concept-table" style="margin-top:8px">
+                <tr><th>시제</th><th>수동태 형태</th><th>예</th></tr>
+                <tr><td class="key">현재</td><td>am/are/is + p.p.</td><td>The room is cleaned every day.</td></tr>
+                <tr><td class="key">과거</td><td>was/were + p.p.</td><td>The spot was cleaned by the oil.</td></tr>
+                <tr><td class="key">미래</td><td>will be + p.p.</td><td>The bridge will be built next year.</td></tr>
+                <tr><td class="key">진행형 수동</td><td>be + being + p.p.</td><td>The car is being repaired now.</td></tr>
+                <tr><td class="key">완료형 수동</td><td>have/has been + p.p.</td><td>The letter has been sent already.</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ 시험에 자주 나오는 함정!</strong><br>
+              • 행위자가 분명하지 않거나 중요하지 않을 때는 by 이하를 생략 가능: "English is spoken in many countries." (by people 생략)<br>
+              • by 다음에는 반드시 <strong>목적격</strong> 인칭대명사: by him (○), by he (✗)<br>
+              • 목적어가 없는 자동사(예: happen, belong, disappear)는 수동태로 만들 수 <strong>없음</strong>!</div>
+            </div>
+          </div>
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 핵심 문법 ②: 접속사 although</div>
+            <div class="unit-detail">
+              <strong>의미</strong>: "비록 ~이지만, ~에도 불구하고" — 앞뒤 내용이 대조·반대될 때 사용하는 부사절 접속사<br>
+              <strong>형태</strong>: <code>Although + 주어 + 동사 ~, 주어 + 동사 ~</code><br><br>
+              <div class="formula-box">
+                <strong>교과서 본문 예문</strong>: Although the glass flask was broken into pieces, they still held together.<br>
+                (비록 유리 플라스크가 산산조각 났지만, 그것들은 여전히 붙어있었다.)
+              </div>
+              <table class="concept-table" style="margin-top:8px">
+                <tr><th>구분</th><th>규칙</th></tr>
+                <tr><td class="key">위치</td><td>문장 맨 앞 또는 두 절 사이 모두 가능 (맨 앞에 오면 콤마로 구분)</td></tr>
+                <tr><td class="key">동의어</td><td><strong>though</strong>(같은 뜻, 더 구어적), <strong>even though</strong>(의미 더 강함)</td></tr>
+                <tr><td class="key">비슷하지만 다른 표현</td><td><strong>despite / in spite of</strong> + 명사(구) — although는 뒤에 '주어+동사'가 와야 하지만, despite/in spite of는 뒤에 명사(구)만 옴</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ 절대 같이 못 쓰는 표현!</strong> although와 but을 한 문장에서 같이 쓰면 안 됨!<br>
+              "Although it was raining, but we went out." (✗ — although와 but이 의미 중복)<br>
+              "Although it was raining, we went out." (✓)</div>
+            </div>
+          </div>
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 핵심 표현 (의사소통 기능)</div>
+            <div class="unit-detail">
+              <span class="tag tag-blue">설명 요청하기</span><br>
+              A: Could you explain more about it?<br>
+              B: Press the green button, and the drone goes up.<br><br>
+              <span class="tag tag-blue">확실성 정도 표현하기</span><br>
+              A: Which rocket will go the highest?<br>
+              B: I'm sure that the red rocket will go the highest.<br><br>
+              <div class="tip-box" style="margin:10px 0 0">💡 확실성을 표현하는 표현 강도 순서: I'm sure that ~ (확신) &gt; I think/guess that ~ (추측) &gt; I'm not sure but ~ (불확실) — 강도 순서를 묻는 문제에 대비</div>
+            </div>
+          </div>
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 주요 단어</div>
+            <div class="unit-detail">
+              <div class="word-grid">
+                <div class="word-card"><div class="word-en">invention</div><div class="word-ko">발명(품)</div></div>
+                <div class="word-card"><div class="word-en">invent</div><div class="word-ko">발명하다</div></div>
+                <div class="word-card"><div class="word-en">technology</div><div class="word-ko">기술</div></div>
+                <div class="word-card"><div class="word-en">innovative</div><div class="word-ko">혁신적인</div></div>
+                <div class="word-card"><div class="word-en">convenient</div><div class="word-ko">편리한</div></div>
+                <div class="word-card"><div class="word-en">inspire</div><div class="word-ko">영감을 주다</div></div>
+                <div class="word-card"><div class="word-en">by chance</div><div class="word-ko">우연히</div></div>
+                <div class="word-card"><div class="word-en">break into pieces</div><div class="word-ko">조각조각 부서지다</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lesson 4 -->
+      <div class="scope-section">
+        <div class="scope-label">Lesson 4 — Open the Doors to the World</div>
+        <div class="unit-list">
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 핵심 문법 ①: 현재완료 시제 — ★최다 출제</div>
+            <div class="unit-detail">
+              <strong>형태</strong>: <code>have/has + 과거분사(p.p.)</code><br>
+              <strong>의미</strong>: 과거에 시작된 일이 현재까지 영향을 미치거나 이어지고 있음<br><br>
+              <div class="formula-box">
+                <strong>교과서 본문 예문</strong>: Hula has been a part of Hawaiian life for a long time.<br>
+                (훌라는 오랫동안 하와이 삶의 일부였다 — 과거부터 지금까지 계속)
+              </div>
+              <table class="concept-table" style="margin-top:4px">
+                <tr><th>용법</th><th>의미</th><th>함께 쓰는 표현</th><th>예문</th></tr>
+                <tr><td class="key">계속</td><td>~해오고 있다</td><td>for, since</td><td>I have lived here for 5 years.</td></tr>
+                <tr><td class="key">경험</td><td>~한 적 있다</td><td>ever, never, before, once</td><td>Have you ever been to Paris?</td></tr>
+                <tr><td class="key">완료</td><td>막 ~했다</td><td>just, already, yet</td><td>I have just eaten.</td></tr>
+                <tr><td class="key">결과</td><td>~해서 지금 ~다</td><td>—</td><td>He has gone to Japan. (지금 없음)</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ 현재완료와 함께 쓸 수 없는 표현!</strong> yesterday, last year, ago, in 2020처럼 <strong>명확한 과거 시점</strong>을 나타내는 말과는 현재완료를 같이 쓸 수 없음 — 이때는 단순 과거시제 사용!<br>
+              "I have visited there <strong>yesterday</strong>." (✗) → "I <strong>visited</strong> there yesterday." (✓)<br>
+              <strong>have been to</strong>(다녀온 적 있다, 지금 여기 있음) vs <strong>have gone to</strong>(가버렸다, 지금 여기 없음) 구분도 자주 나옴</div>
+            </div>
+          </div>
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 핵심 문법 ②: so ~ that 구문</div>
+            <div class="unit-detail">
+              <strong>의미</strong>: "너무 ~해서 (그 결과) ~하다" — 원인과 결과를 연결<br>
+              <strong>형태</strong>: <code>so + 형용사/부사 + that + 주어 + 동사 ~</code><br><br>
+              <div class="formula-box">
+                <strong>교과서 본문 예문</strong>: These gestures are so simple that you can easily remember them.<br>
+                (이 동작들은 너무 간단해서 너는 그것들을 쉽게 기억할 수 있다.)
+              </div>
+              <table class="concept-table" style="margin-top:8px">
+                <tr><th>구분</th><th>형태</th><th>예</th></tr>
+                <tr><td class="key">so ~ that</td><td>so + 형용사/부사 + that절</td><td>so simple that ~</td></tr>
+                <tr><td class="key">바꿔쓰기 (too ~ to)</td><td>too + 형용사/부사 + to부정사</td><td>too difficult to remember = so difficult that you can't remember</td></tr>
+              </table>
+              <div class="warn-box"><strong>⚠ that절이 부정문일 때만 too~to로 바꿀 수 있음!</strong><br>
+              "so simple that you can easily remember" (that절이 긍정문) → too~to로 바꿀 수 <strong>없음</strong><br>
+              "so difficult that you can't remember" (that절이 부정문) → "too difficult to remember"로 바꿀 수 있음 (의미가 반대로 뒤집히는 게 아니라 그대로 유지됨에 주의!)</div>
+            </div>
+          </div>
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 핵심 표현 (의사소통 기능)</div>
+            <div class="unit-detail">
+              <span class="tag tag-blue">반복 요청하기</span><br>
+              A: I'm waiting to buy a pretzel.<br>
+              B: Pret… I beg your pardon?<br><br>
+              <span class="tag tag-blue">장소 묘사하기</span><br>
+              A: There are many musicals.<br>
+              B: Yeah. New York is famous for Broadway musicals.<br><br>
+              <div class="tip-box" style="margin:10px 0 0">💡 "I beg your pardon?"(다시 한번 말씀해주시겠어요?) = "Pardon?" = "Excuse me?" — 못 알아들었을 때 다시 묻는 표현, 비슷한 표현끼리 묶어서 기억!</div>
+            </div>
+          </div>
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 주요 단어</div>
+            <div class="unit-detail">
+              <div class="word-grid">
+                <div class="word-card"><div class="word-en">culture</div><div class="word-ko">문화</div></div>
+                <div class="word-card"><div class="word-en">diversity</div><div class="word-ko">다양성</div></div>
+                <div class="word-card"><div class="word-en">communicate</div><div class="word-ko">소통하다</div></div>
+                <div class="word-card"><div class="word-en">exchange</div><div class="word-ko">교류, 교환(하다)</div></div>
+                <div class="word-card"><div class="word-en">volunteer</div><div class="word-ko">자원봉사(자)</div></div>
+                <div class="word-card"><div class="word-en">global</div><div class="word-ko">세계적인</div></div>
+                <div class="word-card"><div class="word-en">gesture</div><div class="word-ko">동작, 몸짓</div></div>
+                <div class="word-card"><div class="word-en">be famous for</div><div class="word-ko">~로 유명하다</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listen & Speak / Grammar 종합 -->
+      <div class="scope-section">
+        <div class="scope-label">Listen &amp; Speak + Grammar 종합 정리</div>
+        <div class="unit-list">
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 시험에 자주 나오는 핵심 표현 모음</div>
+            <div class="unit-detail">
+              <strong>제안·권유</strong>: Why don't you …? / How about …-ing? / You should …<br>
+              <strong>동의·반대</strong>: I agree with you. / I'm not sure about that. / That's a good point, but …<br>
+              <strong>경험 묻기</strong>: Have you ever …? / Yes, I have. / No, I haven't.<br>
+              <strong>길 안내</strong>: Go straight. / Turn left/right at … / It's on your left/right.<br>
+              <strong>부탁·허락</strong>: Could you …? / Would you mind …-ing? / May I …?
+            </div>
+          </div>
+          <div class="unit-item border-english">
+            <div class="unit-title">🔵 불규칙 동사 과거/과거분사 암기표</div>
+            <div class="unit-detail">
+              <div class="word-grid">
+                <div class="word-card"><div class="word-en">go – went – gone</div><div class="word-ko">가다</div></div>
+                <div class="word-card"><div class="word-en">see – saw – seen</div><div class="word-ko">보다</div></div>
+                <div class="word-card"><div class="word-en">write – wrote – written</div><div class="word-ko">쓰다</div></div>
+                <div class="word-card"><div class="word-en">take – took – taken</div><div class="word-ko">가져가다</div></div>
+                <div class="word-card"><div class="word-en">make – made – made</div><div class="word-ko">만들다</div></div>
+                <div class="word-card"><div class="word-en">know – knew – known</div><div class="word-ko">알다</div></div>
+                <div class="word-card"><div class="word-en">give – gave – given</div><div class="word-ko">주다</div></div>
+                <div class="word-card"><div class="word-en">eat – ate – eaten</div><div class="word-ko">먹다</div></div>
+                <div class="word-card"><div class="word-en">break – broke – broken</div><div class="word-ko">부수다</div></div>
+                <div class="word-card"><div class="word-en">speak – spoke – spoken</div><div class="word-ko">말하다</div></div>
+                <div class="word-card"><div class="word-en">find – found – found</div><div class="word-ko">찾다</div></div>
+                <div class="word-card"><div class="word-en">buy – bought – bought</div><div class="word-ko">사다</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-box" style="margin-bottom:20px">
+        📝 <strong>수업 관련 학습지 전체 포함</strong> — Listen &amp; Speak 대화문·Grammar 연습 문제 모두 복습!
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// D-day
+(function() {
+  const exam = new Date('2026-06-30T09:20:00');
+  const now = new Date();
+  const diff = Math.ceil((exam - now) / (1000 * 60 * 60 * 24));
+  const el = document.getElementById('ddayNum');
+  if (diff > 0) el.textContent = 'D-' + diff;
+  else if (diff === 0) el.textContent = 'D-Day!';
+  else el.textContent = '시험 종료';
+})();
+
+// Toggle
+function toggleCard(header) {
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  header.classList.toggle('open', !isOpen);
+}
+
+// Filter tabs
+document.getElementById('tabs').addEventListener('click', function(e) {
+  const tab = e.target.closest('.tab');
+  if (!tab) return;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  const filter = tab.dataset.filter;
+  document.querySelectorAll('.subject-card').forEach(card => {
+    card.style.display = (filter === 'all' || card.dataset.subject === filter) ? '' : 'none';
+  });
+  updateNoResult();
+});
+
+// Search
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+
+  // Clear marks
+  document.querySelectorAll('[data-searchable]').forEach(el => {
+    el.innerHTML = el.innerHTML.replace(/<mark>(.*?)<\/mark>/g, '$1');
+  });
+
+  if (!q) {
+    document.querySelectorAll('.subject-card').forEach(c => {
+      c.style.display = '';
+      c.querySelector('.card-body').classList.remove('open');
+      c.querySelector('.card-header').classList.remove('open');
+    });
+    updateNoResult();
+    return;
+  }
+
+  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  document.querySelectorAll('.subject-card').forEach(card => {
+    const els = card.querySelectorAll('.unit-title, .unit-detail, .subject-name, .word-en, .word-ko, .formula-box');
+    let match = false;
+    els.forEach(el => {
+      if (el.textContent.toLowerCase().includes(q)) {
+        match = true;
+        el.innerHTML = el.innerHTML.replace(new RegExp(`(${escaped})`, 'gi'), '<mark>$1</mark>');
+      }
+    });
+    card.style.display = match ? '' : 'none';
+    if (match) {
+      card.querySelector('.card-body').classList.add('open');
+      card.querySelector('.card-header').classList.add('open');
+    }
+  });
+
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('.tab[data-filter="all"]').classList.add('active');
+  updateNoResult();
+});
+
+function updateNoResult() {
+  const visible = [...document.querySelectorAll('.subject-card')].filter(c => c.style.display !== 'none');
+  document.getElementById('noResult').classList.toggle('show', visible.length === 0);
+}
+</script>
+</body>
+</html>
